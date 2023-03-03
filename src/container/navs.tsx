@@ -3,7 +3,7 @@ import { ICONS } from "../icons";
 export const naves = [
   {
     icon: ICONS.home,
-    activeIcon: ICONS.home,
+    activeIcon: ICONS.home_active,
     label: "Dashboard",
     to: "/dashboard",
   },
@@ -15,13 +15,13 @@ export const naves = [
   },
   {
     icon: ICONS.scan,
-    activeIcon: ICONS.scan,
+    activeIcon: ICONS.scan_active,
     label: "Cancel Shipment",
     to: "/dashboard",
   },
   {
     icon: ICONS.cancel,
-    activeIcon: ICONS.cancel,
+    activeIcon: ICONS.cancel_active,
     label: "Cancel Shipment",
     to: "/dashboard",
   },

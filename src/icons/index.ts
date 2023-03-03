@@ -7,6 +7,9 @@ import edit from "./edit.png";
 import eye from "./eye.png";
 import eye_off from "./eye_off.png";
 import polygon from "./polygon.png";
+import cancel_active from "./cancel_active.png";
+import home_active from "./home_active.png";
+import scan_active from "./scan_active.png";
 
 export const ICONS = {
   home,
@@ -18,4 +21,7 @@ export const ICONS = {
   eye,
   eye_off,
   polygon,
+  cancel_active,
+  home_active,
+  scan_active,
 };
