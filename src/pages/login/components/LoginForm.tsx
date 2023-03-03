@@ -1,8 +1,8 @@
-import { Box, Button, TextInput, createStyles } from "@mantine/core";
+import { Box, TextInput } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import React, { memo, useCallback } from "react";
-import { COLORS } from "../../../colors";
+import SubmitBtn from "../../../components/button/SubmitBtn";
 import { useLoginMutation } from "../../../hooks/auth/useLoginMutation";
 import {
   ILoginFormValues,
@@ -15,7 +15,6 @@ interface IProps {
 }
 
 const LoginForm: React.FC<IProps> = ({ refetch }) => {
-  const { classes } = useStyle();
   const { mutateAsync, isLoading } = useLoginMutation();
   const formHandler = useForm({
     initialValues: loginInitialValues,
@@ -62,31 +61,10 @@ const LoginForm: React.FC<IProps> = ({ refetch }) => {
       </Box>
 
       <Box mt={35}>
-        <Button
-          loading={isLoading}
-          disabled={isLoading}
-          type="submit"
-          className={classes.btn}
-        >
-          Submit
-        </Button>
+        <SubmitBtn label="Submit" type="secondary" loading={isLoading} />
       </Box>
     </form>
   );
 };
 
 export default memo(LoginForm);
-
-const useStyle = createStyles((theme) => ({
-  btn: {
-    width: "100%",
-    fontWeight: "bold",
-    margin: "auto",
-    height: 40,
-    backgroundColor: COLORS.white,
-    color: COLORS.primary,
-    "&:hover": {
-      backgroundColor: COLORS.white,
-    },
-  },
-}));
