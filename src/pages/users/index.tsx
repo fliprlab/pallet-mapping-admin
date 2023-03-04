@@ -19,8 +19,6 @@ const Users = () => {
   const modalRef = useRef<ICustomModalRef>(null);
   const [search, setSearch] = useState("");
 
-  console.log("search---", search);
-
   const [selectedUser, setSelectedUser] = useState<Partial<TUser>>({
     userName: "",
     origin: "",
@@ -51,7 +49,7 @@ const Users = () => {
     }
   };
   const handleEditUser = async (id: string, data: Partial<TUser>) => {
-    const res = await editMutateAsync({ id, data: data });
+    const res = await editMutateAsync({ _id: id, ...data });
     if (res.status === "success") {
       showNotification({ message: res.message, color: "green" });
       setSelectedUser({ userName: "", origin: "" });

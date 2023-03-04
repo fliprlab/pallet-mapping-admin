@@ -15,7 +15,7 @@ const ActionButton: React.FC<IProps> = ({ id, active, onEditClick }) => {
   const { classes } = useStyles();
   const { isLoading, mutateAsync } = useUpdateUserMutation();
   const updateStatus = async () => {
-    const res = await mutateAsync({ id, data: { active: !active } });
+    const res = await mutateAsync({ _id: id, active: !active });
     if (res.status === "success") {
       showNotification({ message: res.message, color: "green" });
     } else {

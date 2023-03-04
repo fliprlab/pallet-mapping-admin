@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
 import { apiUrls } from "../../api-urls";
 
-const updateUser = async (data: { id: string; data: Partial<TUser> }) => {
+const updateUser = async (data: Partial<TUser>) => {
   const response: TServerResponse = await request({
     url: apiUrls.UPDATE_USER,
     method: "POST",

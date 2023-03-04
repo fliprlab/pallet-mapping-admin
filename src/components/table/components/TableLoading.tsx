@@ -1,5 +1,5 @@
 import { Box, Flex, Loader } from "@mantine/core";
-import React from "react";
+import React, { memo } from "react";
 import { COLORS } from "../../../colors";
 
 const TableLoading = () => {
@@ -10,4 +10,4 @@ const TableLoading = () => {
   );
 };
 
-export default TableLoading;
+export default memo(TableLoading);
