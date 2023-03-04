@@ -11,19 +11,28 @@ interface MainLinkProps {
   label: string;
   to: string;
   hidden: boolean;
+  disabled?: boolean;
 }
 
-const MainLink = ({ icon, label, to, hidden, activeIcon }: MainLinkProps) => {
+const MainLink = ({
+  icon,
+  label,
+  to,
+  hidden,
+  activeIcon,
+  disabled = false,
+}: MainLinkProps) => {
   const navigate = useNavigate();
   const match = useMatch(to);
   return (
     <UnstyledButton
+      disabled={disabled}
       onClick={() => navigate(to)}
       sx={(theme) => ({
         display: "block",
         width: "100%",
         paddingTop: 8,
-        marginBottom: 70,
+        marginBottom: 30,
         borderRadius: theme.radius.sm,
         fontWeight: "bold",
         position: "relative",
@@ -33,14 +42,14 @@ const MainLink = ({ icon, label, to, hidden, activeIcon }: MainLinkProps) => {
       <Group>
         <img
           src={Boolean(match) ? activeIcon : icon}
-          style={{ width: 30 }}
+          style={{ width: 20 }}
           alt="section icon"
         />
 
         <Text
-          size={18}
+          size={16}
           weight="500"
-          color={COLORS.white}
+          color={Boolean(match) ? COLORS.secondary : COLORS.white}
           sx={{ opacity: hidden ? 0 : 1, transition: "all 300ms" }}
         >
           {label}
@@ -49,9 +58,13 @@ const MainLink = ({ icon, label, to, hidden, activeIcon }: MainLinkProps) => {
 
       {Boolean(match) && (
         <Box
-          sx={{ position: "absolute", top: "calc(50% - 12px)", left: "-2.9em" }}
+          sx={{
+            position: "absolute",
+            top: "calc(50% - 6.5px)",
+            left: "-1.5em",
+          }}
         >
-          <img src={ICONS.polygon} alt="arrow" width={15} />
+          <img src={ICONS.polygon} alt="arrow" width={8} />
         </Box>
       )}
     </UnstyledButton>

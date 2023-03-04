@@ -1,5 +1,4 @@
-import { Box, createStyles } from "@mantine/core";
-import { IconArrowUpCircle } from "@tabler/icons";
+import { Box, Burger, createStyles } from "@mantine/core";
 import React, { memo, useState } from "react";
 import { COLORS } from "../colors";
 import { MainLinks } from "./MainLinks";
@@ -10,17 +9,17 @@ const TheSidebar = () => {
   return (
     <Box
       bg={COLORS.primary}
-      p={"2.9em"}
+      p={"1.5em"}
       className={`${classes.root} ${!hidden && classes.activeNav}`}
     >
-      <Box mb={70}>
-        <IconArrowUpCircle
-          color={COLORS.white}
-          style={{ transform: hidden ? "rotate(90deg)" : "rotate(-90deg)" }}
-          size={30}
+      <Box mb={30}>
+        <Burger
+          opened={!hidden}
           onClick={() => {
             setHidden((value) => !value);
           }}
+          size={20}
+          color={COLORS.white}
         />
       </Box>
       <Box>
@@ -34,13 +33,13 @@ export default memo(TheSidebar);
 
 const useStyles = createStyles({
   root: {
-    width: 138,
+    width: 78,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
 
     transition: "all 500ms",
   },
   activeNav: {
-    width: "276px !important",
+    width: "206px !important",
   },
 });

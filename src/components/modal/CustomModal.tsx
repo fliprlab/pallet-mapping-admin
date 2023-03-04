@@ -15,6 +15,7 @@ interface IProps {
   title: string;
   subTitle?: string;
   size?: number;
+  onClose?: () => void;
 }
 
 export interface ICustomModalRef {
@@ -22,7 +23,7 @@ export interface ICustomModalRef {
 }
 
 const CustomModal = (props: IProps, ref: ForwardedRef<ICustomModalRef>) => {
-  const { children, title, subTitle, size = 612 } = props;
+  const { children, title, subTitle, size = 612, onClose } = props;
   const [show, setShow] = useState(false);
 
   const toggleModal = useCallback(() => setShow((value) => !value), []);
@@ -37,7 +38,10 @@ const CustomModal = (props: IProps, ref: ForwardedRef<ICustomModalRef>) => {
   return (
     <Modal
       opened={show}
-      onClose={toggleModal}
+      onClose={() => {
+        onClose && onClose();
+        toggleModal();
+      }}
       withCloseButton={false}
       centered
       size={size}

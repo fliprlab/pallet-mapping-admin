@@ -3,22 +3,34 @@ import { useForm, yupResolver } from "@mantine/form";
 import React, { memo } from "react";
 import { COLORS } from "../../../colors";
 import SubmitBtn from "../../../components/button/SubmitBtn";
-import { userValidation } from "../../../validations/user/user.validation";
+import {
+  userEditValidation,
+  userValidation,
+} from "../../../validations/user/user.validation";
 
 interface IProps {
-  handleSubmit: () => void;
+  type?: "add" | "edit";
+  isLoading: boolean;
+  handleSubmit: (values: Partial<TUser>) => void;
   initialValues: {
-    name: string;
+    userName: string;
     password: string;
     origin: string;
   };
 }
 
-const UserForm: React.FC<IProps> = ({ handleSubmit, initialValues }) => {
+const UserForm: React.FC<IProps> = ({
+  type = "add",
+  handleSubmit,
+  initialValues,
+  isLoading,
+}) => {
   const { classes } = useStyles();
   const formHandler = useForm({
     initialValues: initialValues,
-    validate: yupResolver(userValidation),
+    validate: yupResolver(
+      type === "edit" ? userEditValidation : userValidation
+    ),
     validateInputOnBlur: true,
     validateInputOnChange: true,
   });
@@ -29,16 +41,16 @@ const UserForm: React.FC<IProps> = ({ handleSubmit, initialValues }) => {
           classNames={{ input: classes.input }}
           style={{ borderColor: "red" }}
           withAsterisk
-          type={"email"}
+          type={"text"}
           placeholder="User Name"
-          {...formHandler.getInputProps("name")}
+          {...formHandler.getInputProps("userName")}
         />
       </Box>
       <Box my={15}>
         <TextInput
           classNames={{ input: classes.input }}
           withAsterisk
-          type={"string"}
+          type={"text"}
           placeholder="Origin"
           {...formHandler.getInputProps("origin")}
         />
@@ -54,7 +66,7 @@ const UserForm: React.FC<IProps> = ({ handleSubmit, initialValues }) => {
       </Box>
 
       <Box mt={40}>
-        <SubmitBtn label="Submit" />
+        <SubmitBtn loading={isLoading} label="Submit" />
       </Box>
     </form>
   );
