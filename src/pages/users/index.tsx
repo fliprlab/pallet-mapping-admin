@@ -17,6 +17,10 @@ import UserForm from "./components/UserForm";
 const Users = () => {
   let userColumns = [...columns];
   const modalRef = useRef<ICustomModalRef>(null);
+  const [search, setSearch] = useState("");
+
+  console.log("search---", search);
+
   const [selectedUser, setSelectedUser] = useState<Partial<TUser>>({
     userName: "",
     origin: "",
@@ -27,7 +31,7 @@ const Users = () => {
   const { isLoading: editLoading, mutateAsync: editMutateAsync } =
     useUpdateUserMutation();
 
-  const { data, isLoading } = useGetUsersQuery();
+  const { data, isLoading } = useGetUsersQuery({ search: search });
 
   const users = useMemo(() => {
     if (!isLoading && data) {
@@ -80,6 +84,7 @@ const Users = () => {
         </Text>
       </Box>
       <CustomTable
+        onChangeSearch={setSearch}
         isLoading={isLoading}
         rightComponent={
           <OutlineButton
