@@ -1,16 +1,20 @@
-import { Box, createStyles, Text } from "@mantine/core";
+import { Box, createStyles, Flex, Text } from "@mantine/core";
 import React, { memo } from "react";
 import { COLORS } from "../colors";
 import { ICONS } from "../icons";
+import { logoutUser } from "../services/authenticate.service";
 
 const TheHeader = () => {
   const { classes } = useStyle();
+
   return (
     <Box className={classes.header}>
-      <img src={ICONS.logout} className={classes.icon} alt="logout" />
-      <Text size={20} weight="500" color={COLORS.primary}>
-        Logout
-      </Text>
+      <Flex onClick={() => logoutUser()} align={"center"}>
+        <img src={ICONS.logout} className={classes.icon} alt="logout" />
+        <Text size={16} weight="500" color={COLORS.primary}>
+          Logout
+        </Text>
+      </Flex>
     </Box>
   );
 };
@@ -22,9 +26,10 @@ const useStyle = createStyles({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    padding: "3.8em 5em",
+    padding: "2em 2em",
   },
   icon: {
-    width: 30,
+    width: 20,
+    marginRight: 2,
   },
 });

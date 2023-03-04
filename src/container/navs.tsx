@@ -16,13 +16,15 @@ export const naves = [
   {
     icon: ICONS.scan,
     activeIcon: ICONS.scan_active,
-    label: "Cancel Shipment",
-    to: "/dashboard",
+    label: "Scan Shipment",
+    to: "/scan",
+    disabled: true,
   },
   {
     icon: ICONS.cancel,
     activeIcon: ICONS.cancel_active,
     label: "Cancel Shipment",
-    to: "/dashboard",
+    to: "/cancel",
+    disabled: true,
   },
 ];

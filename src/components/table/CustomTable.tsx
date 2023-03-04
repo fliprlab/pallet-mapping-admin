@@ -2,6 +2,7 @@ import { memo, ReactNode } from "react";
 import { Box, createStyles, Flex, Table } from "@mantine/core";
 import { COLORS } from "../../colors";
 import SearchField from "./components/SearchField";
+import TableLoading from "./components/TableLoading";
 
 interface IProps {
   search?: boolean;
@@ -9,6 +10,7 @@ interface IProps {
   rightComponent?: ReactNode;
   data: any[];
   columns: TTableColumns[];
+  isLoading: boolean;
 }
 
 const CustomTable: React.FC<IProps> = ({
@@ -17,9 +19,9 @@ const CustomTable: React.FC<IProps> = ({
   rightComponent,
   data,
   columns,
+  isLoading,
 }) => {
   const { classes } = styles();
-  const isLoading = false;
 
   return (
     <Box className={classes.root}>
@@ -31,7 +33,7 @@ const CustomTable: React.FC<IProps> = ({
         </Box>
       )}
 
-      {!isLoading && (
+      {!isLoading ? (
         <Box className={classes.tableContainer}>
           <Table
             withBorder={false}
@@ -82,6 +84,8 @@ const CustomTable: React.FC<IProps> = ({
             </tbody>
           </Table>
         </Box>
+      ) : (
+        <TableLoading />
       )}
     </Box>
   );
@@ -104,11 +108,11 @@ const styles = createStyles({
     display: "flex",
   },
   tableContainer: {
-    padding: 18,
+    // padding: 18,
   },
   tHead: {
     fontWeight: 600,
-    fontSize: "18px !important",
+    fontSize: "16px !important",
     color: "#000 !important",
     textAlign: "center",
   },

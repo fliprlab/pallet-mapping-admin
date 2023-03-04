@@ -27,7 +27,7 @@ const useStyle = createStyles({
     "& input": {
       borderColor: COLORS.borderPrimary,
       borderRadius: 5,
-      padding: "4.5px 15px",
+      padding: "0px 15px",
       height: "auto !important",
       fontSize: "14px",
       fontWeight: 300,
