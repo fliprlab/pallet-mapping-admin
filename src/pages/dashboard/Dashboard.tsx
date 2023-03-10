@@ -1,9 +1,14 @@
-import { Box } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
+import { COLORS } from "../../colors";
 
 const Dashboard = () => {
   return (
     <Box>
-      <h1>Dashboard</h1>
+      <Box sx={{ marginBottom: "2em" }}>
+        <Text size={18} color={COLORS.black} ml={32}>
+          Dashboard
+        </Text>
+      </Box>
     </Box>
   );
 };
