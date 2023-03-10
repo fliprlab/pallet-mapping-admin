@@ -1,5 +1,7 @@
 import home from "./home.png";
 import active_user from "./active_user.png";
+import user from "./user.png";
+
 import scan from "./scan.png";
 import cancel from "./cancel.png";
 import logout from "./logout.png";
@@ -13,6 +15,7 @@ import scan_active from "./scan_active.png";
 
 export const ICONS = {
   home,
+  user,
   active_user,
   scan,
   cancel,

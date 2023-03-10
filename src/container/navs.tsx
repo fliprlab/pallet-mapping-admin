@@ -8,7 +8,7 @@ export const naves = [
     to: "/dashboard",
   },
   {
-    icon: ICONS.active_user,
+    icon: ICONS.user,
     activeIcon: ICONS.active_user,
     label: "Users",
     to: "/users",
