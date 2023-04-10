@@ -10,12 +10,12 @@ import CustomTable from "../../components/table/CustomTable";
 import { useAddUserMutation } from "../../hooks/users/mutation/useAddUser.mutation";
 import { useUpdateUserMutation } from "../../hooks/users/mutation/useUpdateUser.mutation";
 import { useGetUsersQuery } from "../../hooks/users/query/useGetUsers.query";
-import { columns } from "./columns";
 import ActionButton from "./components/ActionButton";
 import UserForm from "./components/UserForm";
+import { COLUMNS } from "../../columns";
 
 const Users = () => {
-  let userColumns = [...columns];
+  let userColumns = [...COLUMNS.userColumns];
   const modalRef = useRef<ICustomModalRef>(null);
   const [search, setSearch] = useState("");
 
@@ -86,6 +86,7 @@ const Users = () => {
         isLoading={isLoading}
         rightComponent={
           <OutlineButton
+            title="Add User"
             onClick={() => {
               modalRef.current?.toggleModal();
             }}

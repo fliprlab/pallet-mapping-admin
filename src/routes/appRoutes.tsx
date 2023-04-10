@@ -4,6 +4,7 @@ import ErrorPage from "../pages/error/ErrorPage";
 import Login from "../pages/login/Login";
 import Users from "../pages/users";
 import ProtectedRoute from "../routers/Protected.route";
+import Locations from "../pages/locations/Locations";
 
 export const appRouter = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "users",
         element: <Users />,
+      },
+      {
+        path: "locations",
+        element: <Locations />,
       },
     ],
     errorElement: <ErrorPage />,

@@ -3,10 +3,7 @@ import { useForm, yupResolver } from "@mantine/form";
 import React, { memo } from "react";
 import { COLORS } from "../../../colors";
 import SubmitBtn from "../../../components/button/SubmitBtn";
-import {
-  userEditValidation,
-  userValidation,
-} from "../../../validations/user/user.validation";
+import { VALIDATIONS } from "../../../validations";
 
 interface IProps {
   type?: "add" | "edit";
@@ -29,7 +26,9 @@ const UserForm: React.FC<IProps> = ({
   const formHandler = useForm({
     initialValues: initialValues,
     validate: yupResolver(
-      type === "edit" ? userEditValidation : userValidation
+      type === "edit"
+        ? VALIDATIONS.userEditValidation
+        : VALIDATIONS.userValidation
     ),
     validateInputOnBlur: true,
     validateInputOnChange: true,

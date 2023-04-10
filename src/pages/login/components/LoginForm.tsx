@@ -4,11 +4,9 @@ import { showNotification } from "@mantine/notifications";
 import React, { memo, useCallback } from "react";
 import SubmitBtn from "../../../components/button/SubmitBtn";
 import { useLoginMutation } from "../../../hooks/auth/useLoginMutation";
-import {
-  ILoginFormValues,
-  loginInitialValues,
-} from "../../../initial-values/login/login.values";
-import { loginValidation } from "../../../validations/login/login.validation";
+import { ILoginFormValues } from "../../../initial-values/login/login.values";
+import { VALIDATIONS } from "../../../validations";
+import { INITIALVALUES } from "../../../initial-values";
 
 interface IProps {
   refetch: any;
@@ -17,8 +15,8 @@ interface IProps {
 const LoginForm: React.FC<IProps> = ({ refetch }) => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const formHandler = useForm({
-    initialValues: loginInitialValues,
-    validate: yupResolver(loginValidation),
+    initialValues: INITIALVALUES.loginInitialValues,
+    validate: yupResolver(VALIDATIONS.loginValidation),
     validateInputOnBlur: true,
     validateInputOnChange: true,
   });

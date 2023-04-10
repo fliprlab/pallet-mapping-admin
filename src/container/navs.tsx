@@ -14,6 +14,12 @@ export const naves = [
     to: "/users",
   },
   {
+    icon: ICONS.user,
+    activeIcon: ICONS.active_user,
+    label: "Locations",
+    to: "/locations",
+  },
+  {
     icon: ICONS.scan,
     activeIcon: ICONS.scan_active,
     label: "Scan Shipment",
