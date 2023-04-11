@@ -1,4 +1,4 @@
-export const columns: TTableColumns[] = [
+export const userColumns: TTableColumns[] = [
   {
     label: "User Name",
     key: "userName",

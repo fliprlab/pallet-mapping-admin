@@ -1,4 +1,4 @@
-import { Box, Flex, Loader } from "@mantine/core";
+import { Flex, Loader } from "@mantine/core";
 import React, { memo } from "react";
 import { COLORS } from "../../../colors";
 

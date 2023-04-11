@@ -4,13 +4,14 @@ import { COLORS } from "../../colors";
 
 interface IProps {
   onClick?: () => void;
+  title: string;
 }
 
-const OutlineButton: React.FC<IProps> = ({ onClick }) => {
+const OutlineButton: React.FC<IProps> = ({ onClick, title }) => {
   const { classes } = useStyles();
   return (
     <Button variant="outline" className={classes.root} onClick={onClick}>
-      Add User
+      {title}
     </Button>
   );
 };
