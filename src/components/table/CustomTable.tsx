@@ -1,7 +1,6 @@
 import { memo, ReactNode } from "react";
 import { Box, createStyles, Flex, Table } from "@mantine/core";
 import { COLORS } from "../../colors";
-import SearchField from "./components/SearchField";
 import TableLoading from "./components/TableLoading";
 
 interface IProps {
@@ -13,26 +12,11 @@ interface IProps {
   isLoading: boolean;
 }
 
-const CustomTable: React.FC<IProps> = ({
-  search = true,
-  onChangeSearch,
-  rightComponent,
-  data,
-  columns,
-  isLoading,
-}) => {
+const CustomTable: React.FC<IProps> = ({ data, columns, isLoading }) => {
   const { classes } = styles();
 
   return (
-    <Box className={classes.root}>
-      {(search || rightComponent) && (
-        <Box className={classes.header}>
-          {search ? <SearchField onChangeText={onChangeSearch} /> : <div />}
-
-          {rightComponent && <div>{rightComponent}</div>}
-        </Box>
-      )}
-
+    <Box>
       {!isLoading ? (
         <Box className={classes.tableContainer}>
           <Table

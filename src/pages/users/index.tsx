@@ -6,7 +6,7 @@ import OutlineButton from "../../components/button/OutlineButton";
 import CustomModal, {
   ICustomModalRef,
 } from "../../components/modal/CustomModal";
-import CustomTable from "../../components/table/CustomTable";
+import CustomTableWithHeader from "../../components/table/CustomTableWithHeader";
 import { useAddUserMutation } from "../../hooks/users/mutation/useAddUser.mutation";
 import { useUpdateUserMutation } from "../../hooks/users/mutation/useUpdateUser.mutation";
 import { useGetUsersQuery } from "../../hooks/users/query/useGetUsers.query";
@@ -81,7 +81,7 @@ const Users = () => {
           Users Details
         </Text>
       </Box>
-      <CustomTable
+      <CustomTableWithHeader
         onChangeSearch={setSearch}
         isLoading={isLoading}
         rightComponent={

@@ -1,7 +1,7 @@
 import { Box, Text } from "@mantine/core";
 import React, { useMemo, useRef, useState } from "react";
 import { COLORS } from "../../colors";
-import CustomTable from "../../components/table/CustomTable";
+import CustomTableWithHeader from "../../components/table/CustomTableWithHeader";
 import { COLUMNS } from "../../columns";
 import OutlineButton from "../../components/button/OutlineButton";
 import AddLocationForm from "./components/AddLocationForm";
@@ -30,7 +30,7 @@ const Locations = () => {
           Locations
         </Text>
       </Box>
-      <CustomTable
+      <CustomTableWithHeader
         onChangeSearch={setSearch}
         isLoading={isLoading}
         rightComponent={
