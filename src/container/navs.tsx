@@ -14,10 +14,16 @@ export const naves = [
     to: "/users",
   },
   {
-    icon: ICONS.user,
-    activeIcon: ICONS.active_user,
+    icon: ICONS.location,
+    activeIcon: ICONS.location_active,
     label: "Locations",
     to: "/locations",
+  },
+  {
+    icon: ICONS.grid,
+    activeIcon: ICONS.grid_active,
+    label: "Grid List",
+    to: "/grid-list",
   },
   {
     icon: ICONS.scan,

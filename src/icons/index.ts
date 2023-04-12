@@ -12,7 +12,10 @@ import polygon from "./polygon.png";
 import cancel_active from "./cancel_active.png";
 import home_active from "./home_active.png";
 import scan_active from "./scan_active.png";
-
+import location from "./location.png";
+import location_active from "./location-active.png";
+import grid from "./grid.png";
+import grid_active from "./grid-active.png";
 export const ICONS = {
   home,
   user,
@@ -27,4 +30,8 @@ export const ICONS = {
   cancel_active,
   home_active,
   scan_active,
+  location,
+  location_active,
+  grid,
+  grid_active,
 };
