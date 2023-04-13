@@ -1,9 +1,10 @@
-import { Box, TextInput, createStyles } from "@mantine/core";
+import { Box, Select, TextInput, createStyles } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { COLORS } from "../../../colors";
 import SubmitBtn from "../../../components/button/SubmitBtn";
 import { VALIDATIONS } from "../../../validations";
+import { useGetLocations } from "../../../hooks/locations/query/useGetLocations.query";
 
 interface IProps {
   type?: "add" | "edit";
@@ -22,6 +23,18 @@ const UserForm: React.FC<IProps> = ({
   initialValues,
   isLoading,
 }) => {
+  const { isLoading: locationLoading, data } = useGetLocations({ search: "" });
+
+  const locations = useMemo(() => {
+    if (!locationLoading && data) {
+      return data.data.map((item: any) => {
+        return item.location;
+      });
+    } else {
+      return [];
+    }
+  }, [data, locationLoading]);
+
   const { classes } = useStyles();
   const formHandler = useForm({
     initialValues: initialValues,
@@ -46,11 +59,9 @@ const UserForm: React.FC<IProps> = ({
         />
       </Box>
       <Box my={15}>
-        <TextInput
-          classNames={{ input: classes.input }}
-          withAsterisk
-          type={"text"}
-          placeholder="Origin"
+        <Select
+          placeholder="Enter Origin"
+          data={locations}
           {...formHandler.getInputProps("origin")}
         />
       </Box>
