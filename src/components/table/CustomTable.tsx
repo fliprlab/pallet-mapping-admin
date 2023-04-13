@@ -2,6 +2,7 @@ import { memo, ReactNode } from "react";
 import { Box, createStyles, Flex, Table } from "@mantine/core";
 import { COLORS } from "../../colors";
 import TableLoading from "./components/TableLoading";
+import Pagination from "../Pagination/Pagination";
 
 interface IProps {
   search?: boolean;
@@ -10,9 +11,19 @@ interface IProps {
   data: any[];
   columns: TTableColumns[];
   isLoading: boolean;
+  paginationProps?: {
+    activePage: number;
+    setActivePage: React.Dispatch<React.SetStateAction<number>>;
+    pagedData: { total: number };
+  };
 }
 
-const CustomTable: React.FC<IProps> = ({ data, columns, isLoading }) => {
+const CustomTable: React.FC<IProps> = ({
+  data,
+  columns,
+  isLoading,
+  paginationProps,
+}) => {
   const { classes } = styles();
 
   return (
@@ -22,7 +33,7 @@ const CustomTable: React.FC<IProps> = ({ data, columns, isLoading }) => {
           <Table
             withBorder={false}
             verticalSpacing={"md"}
-            striped
+            // striped
             style={{ textAlign: "center" }}
           >
             <thead>
@@ -70,6 +81,15 @@ const CustomTable: React.FC<IProps> = ({ data, columns, isLoading }) => {
         </Box>
       ) : (
         <TableLoading />
+      )}
+      {paginationProps && (
+        <Box pb={16} px={32}>
+          <Pagination
+            activePage={paginationProps.activePage}
+            setPage={paginationProps.setActivePage}
+            totalPages={paginationProps.pagedData.total}
+          />
+        </Box>
       )}
     </Box>
   );

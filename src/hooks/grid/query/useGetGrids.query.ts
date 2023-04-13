@@ -11,8 +11,13 @@ const get = async (params: Partial<TPaging>) => {
   return response;
 };
 
-export const useGetGridsQuery = (params: Partial<TPaging>) => {
-  return useQuery(["admin", "get-grids", params.itemPerPage, params.page], () =>
-    get(params)
+export const useGetGridsQuery = (
+  params: Partial<TPaging>,
+  options?: TQueryOptions
+) => {
+  return useQuery(
+    ["admin", "get-grids", params.itemPerPage, params.page],
+    () => get(params),
+    { ...options, keepPreviousData: true }
   );
 };

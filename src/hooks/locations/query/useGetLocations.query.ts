@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
 import { apiUrls } from "../../api-urls";
 
-interface IParams {
-  search: string;
-}
-
-const get = async (params: Partial<IParams>) => {
+const get = async (params?: TPaging) => {
   const response: TServerResponse = await request({
     url: apiUrls.GET_LOCATIONS,
     method: "GET",
@@ -15,8 +11,10 @@ const get = async (params: Partial<IParams>) => {
   return response;
 };
 
-export const useGetLocations = (params: Partial<IParams>) => {
-  return useQuery(["admin", "get-locations", params?.search], () =>
-    get(params)
+export const useGetLocations = (params?: TPaging, options?: TQueryOptions) => {
+  return useQuery(
+    ["admin", "get-locations", params?.itemPerPage, params?.page],
+    () => get(params),
+    { ...options, keepPreviousData: true }
   );
 };

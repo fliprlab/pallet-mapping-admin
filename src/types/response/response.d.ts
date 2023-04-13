@@ -9,3 +9,9 @@ type TServerResponse = {
 
 type TOnSuccessHandle = (res: TServerResponse) => void;
 type TOnErrorHandle = (res: any) => void;
+
+type TQueryOptions = {
+  onSuccess?: TOnSuccessHandle;
+  onError?: TOnErrorHandle;
+  enabled?: boolean;
+};

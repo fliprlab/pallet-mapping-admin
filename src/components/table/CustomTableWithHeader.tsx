@@ -11,6 +11,11 @@ interface IProps {
   data: any[];
   columns: TTableColumns[];
   isLoading: boolean;
+  paginationProps?: {
+    activePage: number;
+    setActivePage: React.Dispatch<React.SetStateAction<number>>;
+    pagedData: { total: number };
+  };
 }
 
 const CustomTableWithHeader: React.FC<IProps> = ({
@@ -20,6 +25,7 @@ const CustomTableWithHeader: React.FC<IProps> = ({
   data,
   columns,
   isLoading,
+  paginationProps,
 }) => {
   const { classes } = styles();
 
@@ -32,7 +38,12 @@ const CustomTableWithHeader: React.FC<IProps> = ({
           {rightComponent && <div>{rightComponent}</div>}
         </Box>
       )}
-      <CustomTable columns={columns} data={data} isLoading={isLoading} />
+      <CustomTable
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        paginationProps={paginationProps}
+      />
     </Box>
   );
 };

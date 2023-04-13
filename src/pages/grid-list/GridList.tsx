@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@mantine/core";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { COLORS } from "../../colors";
 import CustomTable from "../../components/table/CustomTable";
 import OutlineButton from "../../components/button/OutlineButton";
@@ -9,10 +9,35 @@ import CustomModal, {
 import AddGridForm from "./components/AddGridForm";
 import { useGetGridsQuery } from "../../hooks/grid/query/useGetGrids.query";
 import { COLUMNS } from "../../columns";
+import { TABLE_PAGE_LIMIT } from "../../constants";
+import { showNotification } from "@mantine/notifications";
 
 const GridList = () => {
   const modalRef = useRef<ICustomModalRef>(null);
-  const { isLoading, data } = useGetGridsQuery({});
+
+  const [activePage, setActivePage] = useState(1);
+  const [pagedData, setPagedData] = useState({ total: 0 });
+
+  const { isLoading, data } = useGetGridsQuery(
+    {
+      itemPerPage: TABLE_PAGE_LIMIT,
+      page: activePage,
+    },
+    {
+      onSuccess: (res) => {
+        if (res.status === "success") {
+          console.log("res.data.pageData", res.pageData);
+          setPagedData(res.pageData ? res.pageData : { total: 0 });
+        } else {
+          showNotification({
+            message: res.data.message,
+            color: "red",
+          });
+        }
+      },
+      enabled: true,
+    }
+  );
 
   const grids = useMemo(() => {
     if (!isLoading && data) {
@@ -44,6 +69,7 @@ const GridList = () => {
         columns={COLUMNS.gridColumns}
         data={grids}
         isLoading={isLoading}
+        paginationProps={{ activePage, pagedData, setActivePage }}
       />
       <CustomModal ref={modalRef} title={"Add Grid"}>
         <AddGridForm

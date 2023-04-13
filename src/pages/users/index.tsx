@@ -13,6 +13,7 @@ import { useGetUsersQuery } from "../../hooks/users/query/useGetUsers.query";
 import ActionButton from "./components/ActionButton";
 import UserForm from "./components/UserForm";
 import { COLUMNS } from "../../columns";
+import { TABLE_PAGE_LIMIT } from "../../constants";
 
 const Users = () => {
   let userColumns = [...COLUMNS.userColumns];
@@ -29,7 +30,30 @@ const Users = () => {
   const { isLoading: editLoading, mutateAsync: editMutateAsync } =
     useUpdateUserMutation();
 
-  const { data, isLoading } = useGetUsersQuery({ search: search });
+  const [activePage, setActivePage] = useState(1);
+  const [pagedData, setPagedData] = useState({ total: 0 });
+
+  const { data, isLoading } = useGetUsersQuery(
+    {
+      search: search,
+      itemPerPage: TABLE_PAGE_LIMIT,
+      page: activePage,
+    },
+    {
+      onSuccess: (res) => {
+        if (res.status === "success") {
+          console.log("res.data.pageData", res.pageData);
+          setPagedData(res.pageData ? res.pageData : { total: 0 });
+        } else {
+          showNotification({
+            message: res.data.message,
+            color: "red",
+          });
+        }
+      },
+      enabled: true,
+    }
+  );
 
   const users = useMemo(() => {
     if (!isLoading && data) {
@@ -95,6 +119,7 @@ const Users = () => {
         search={true}
         data={users}
         columns={userColumns}
+        paginationProps={{ activePage, pagedData, setActivePage }}
       />
       <CustomModal
         ref={modalRef}

@@ -20,7 +20,7 @@ const AddGridForm: React.FC<IProps> = ({ toggle }) => {
     validate: yupResolver(VALIDATIONS.grid),
   });
 
-  const { isLoading, data } = useGetLocations({ search: "" });
+  const { isLoading, data } = useGetLocations();
 
   const locations = useMemo(() => {
     if (!isLoading && data) {

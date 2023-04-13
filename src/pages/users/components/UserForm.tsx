@@ -23,7 +23,7 @@ const UserForm: React.FC<IProps> = ({
   initialValues,
   isLoading,
 }) => {
-  const { isLoading: locationLoading, data } = useGetLocations({ search: "" });
+  const { isLoading: locationLoading, data } = useGetLocations();
 
   const locations = useMemo(() => {
     if (!locationLoading && data) {

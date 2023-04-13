@@ -9,11 +9,33 @@ import CustomModal, {
   ICustomModalRef,
 } from "../../components/modal/CustomModal";
 import { useGetLocations } from "../../hooks/locations/query/useGetLocations.query";
+import { TABLE_PAGE_LIMIT } from "../../constants";
+import { showNotification } from "@mantine/notifications";
 
 const Locations = () => {
-  const [search, setSearch] = useState("");
   const modalRef = useRef<ICustomModalRef>(null);
-  const { isLoading, data } = useGetLocations({ search: search });
+  const [activePage, setActivePage] = useState(1);
+  const [pagedData, setPagedData] = useState({ total: 0 });
+  const { isLoading, data } = useGetLocations(
+    {
+      itemPerPage: TABLE_PAGE_LIMIT,
+      page: activePage,
+    },
+    {
+      onSuccess: (res) => {
+        if (res.status === "success") {
+          console.log("res.data.pageData", res.pageData);
+          setPagedData(res.pageData ? res.pageData : { total: 0 });
+        } else {
+          showNotification({
+            message: res.data.message,
+            color: "red",
+          });
+        }
+      },
+      enabled: true,
+    }
+  );
 
   const locations = useMemo(() => {
     if (!isLoading && data) {
@@ -31,7 +53,6 @@ const Locations = () => {
         </Text>
       </Box>
       <CustomTableWithHeader
-        onChangeSearch={setSearch}
         isLoading={isLoading}
         rightComponent={
           <OutlineButton
@@ -41,10 +62,12 @@ const Locations = () => {
             }}
           />
         }
-        search={true}
+        search={false}
         data={locations}
         columns={COLUMNS.locationsColumns}
+        paginationProps={{ activePage, pagedData, setActivePage }}
       />
+
       <CustomModal ref={modalRef} title={"Add Location"}>
         <AddLocationForm
           toggleModal={() => {
