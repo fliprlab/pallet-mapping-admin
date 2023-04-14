@@ -25,18 +25,18 @@ export const naves = [
     label: "Grid List",
     to: "/grid-list",
   },
-  {
-    icon: ICONS.scan,
-    activeIcon: ICONS.scan_active,
-    label: "Scan Shipment",
-    to: "/scan",
-    disabled: true,
-  },
-  {
-    icon: ICONS.cancel,
-    activeIcon: ICONS.cancel_active,
-    label: "Cancel Shipment",
-    to: "/cancel",
-    disabled: true,
-  },
+  // {
+  //   icon: ICONS.scan,
+  //   activeIcon: ICONS.scan_active,
+  //   label: "Scan Shipment",
+  //   to: "/scan",
+  //   disabled: true,
+  // },
+  // {
+  //   icon: ICONS.cancel,
+  //   activeIcon: ICONS.cancel_active,
+  //   label: "Cancel Shipment",
+  //   to: "/cancel",
+  //   disabled: true,
+  // },
 ];
