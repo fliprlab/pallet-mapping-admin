@@ -10,6 +10,12 @@ export const naves = [
   {
     icon: ICONS.user,
     activeIcon: ICONS.active_user,
+    label: "Hub Admin",
+    to: "/hub-admin",
+  },
+  {
+    icon: ICONS.user,
+    activeIcon: ICONS.active_user,
     label: "Users",
     to: "/users",
   },
