@@ -2,18 +2,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
 import { apiUrls } from "../../api-urls";
 
-const addUser = async (data: Partial<TUser>) => {
+const update = async (data: { _id: string; password: string }) => {
   const response: TServerResponse = await request({
-    url: apiUrls.ADD_USER,
+    url: apiUrls.UPDATE_USER_PASS,
     method: "POST",
     data,
   });
   return response;
 };
 
-export const useAddUserMutation = (search: string, paging: TPaging) => {
+export const useUpdateUserPassMutation = (search: string, paging: TPaging) => {
   const queryClient = useQueryClient();
-  return useMutation(addUser, {
+  return useMutation(update, {
     onSuccess: () => {
       queryClient.invalidateQueries(["admin", "get-users", paging, search]);
     },

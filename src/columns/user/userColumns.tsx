@@ -4,5 +4,9 @@ export const userColumns: TTableColumns[] = [
     key: "userName",
   },
   { label: "Password", key: "password", renderCell: () => <div>********</div> },
-  { label: "Origin", key: "origin" },
+  {
+    label: "Origin",
+    key: "origin",
+    renderCell: (value) => <div>{value.origin.origin ?? value.origin}</div>,
+  },
 ];

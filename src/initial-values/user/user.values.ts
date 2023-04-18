@@ -1,13 +1,21 @@
 export interface IUserFormValues {
-  name: string;
-  mobile: string;
+  userName: string;
+  origin: string;
   password: string;
-  confirmPassword: string;
 }
 
 export const UserInitialValues: IUserFormValues = {
-  name: "",
-  mobile: "",
+  userName: "",
+  origin: "",
   password: "",
-  confirmPassword: "",
+};
+
+export interface IUserResetPassIniValues {
+  password: string;
+  confirm_password: string;
+}
+
+export const UserResetPassIniValues = {
+  password: "",
+  confirm_password: "",
 };
