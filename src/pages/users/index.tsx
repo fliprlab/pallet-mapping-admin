@@ -1,98 +1,54 @@
 import { Box, Text } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
+
 import React, { useMemo, useRef, useState } from "react";
 import { COLORS } from "../../colors";
 import OutlineButton from "../../components/button/OutlineButton";
-import CustomModal, {
-  ICustomModalRef,
-} from "../../components/modal/CustomModal";
 import CustomTableWithHeader from "../../components/table/CustomTableWithHeader";
-import { useAddUserMutation } from "../../hooks/users/mutation/useAddUser.mutation";
-import { useUpdateUserMutation } from "../../hooks/users/mutation/useUpdateUser.mutation";
-import { useGetUsersQuery } from "../../hooks/users/query/useGetUsers.query";
-import ActionButton from "./components/ActionButton";
-import UserForm from "./components/UserForm";
 import { COLUMNS } from "../../columns";
 import { TABLE_PAGE_LIMIT } from "../../constants";
+import Actions from "./components/Actions";
+
+import { useGetUsersQuery } from "../../hooks/users/query/useGetUsers.query";
+import UserModal, { IUserModalRef } from "./components/UserModal";
+import UpdateUserPassModal, {
+  IUpdateUserPassModalRef,
+} from "./components/UpdateUserPassModal";
 
 const Users = () => {
   let userColumns = [...COLUMNS.userColumns];
-  const modalRef = useRef<ICustomModalRef>(null);
   const [search, setSearch] = useState("");
-
-  const [selectedUser, setSelectedUser] = useState<Partial<TUser>>({
-    userName: "",
-    origin: "",
-  });
-
-  const { isLoading: addLoading, mutateAsync: addMutateAsync } =
-    useAddUserMutation();
-  const { isLoading: editLoading, mutateAsync: editMutateAsync } =
-    useUpdateUserMutation();
-
   const [activePage, setActivePage] = useState(1);
   const [pagedData, setPagedData] = useState({ total: 0 });
 
+  const hubAdminModalRef = useRef<IUserModalRef>(null);
+  const hubUpdatePassModalRef = useRef<IUpdateUserPassModalRef>(null);
+
   const { data, isLoading } = useGetUsersQuery(
-    {
-      search: search,
-      itemPerPage: TABLE_PAGE_LIMIT,
-      page: activePage,
-    },
-    {
-      onSuccess: (res) => {
-        if (res.status === "success") {
-          console.log("res.data.pageData", res.pageData);
-          setPagedData(res.pageData ? res.pageData : { total: 0 });
-        } else {
-          showNotification({
-            message: res.data.message,
-            color: "red",
-          });
-        }
-      },
-      enabled: true,
-    }
+    { page: activePage, itemPerPage: TABLE_PAGE_LIMIT },
+    { search: search }
   );
 
   const users = useMemo(() => {
     if (!isLoading && data) {
+      data.pageData && setPagedData(data.pageData);
       return data.data;
     } else {
       return [];
     }
   }, [data, isLoading]);
 
-  const handleAddUser = async (data: Partial<TUser>) => {
-    const res = await addMutateAsync(data);
-    if (res.status === "success") {
-      showNotification({ message: res.message, color: "green" });
-      modalRef.current?.toggleModal();
-    } else {
-      showNotification({ message: res.data.message, color: "red" });
-    }
-  };
-  const handleEditUser = async (id: string, data: Partial<TUser>) => {
-    const res = await editMutateAsync({ _id: id, ...data });
-    if (res.status === "success") {
-      showNotification({ message: res.message, color: "green" });
-      setSelectedUser({ userName: "", origin: "" });
-      modalRef.current?.toggleModal();
-    } else {
-      showNotification({ message: res.data.message, color: "red" });
-    }
-  };
-
   userColumns.push({
     label: "Activity",
     key: "action",
     renderCell: (data: TUser) => (
-      <ActionButton
-        id={data._id}
+      <Actions
+        search={search}
+        paging={{ itemPerPage: TABLE_PAGE_LIMIT, page: activePage }}
+        _id={data._id}
         active={!!data.active}
         onEditClick={() => {
-          setSelectedUser(data);
-          modalRef.current?.toggleModal();
+          hubUpdatePassModalRef.current?.updateUserId(data._id);
+          hubUpdatePassModalRef.current?.toggleModal();
         }}
       />
     ),
@@ -111,9 +67,7 @@ const Users = () => {
         rightComponent={
           <OutlineButton
             title="Add User"
-            onClick={() => {
-              modalRef.current?.toggleModal();
-            }}
+            onClick={() => hubAdminModalRef.current?.toggleModal()}
           />
         }
         search={true}
@@ -121,35 +75,16 @@ const Users = () => {
         columns={userColumns}
         paginationProps={{ activePage, pagedData, setActivePage }}
       />
-      <CustomModal
-        ref={modalRef}
-        title={selectedUser._id ? "Edit Users" : "Add Users"}
-        subTitle={
-          selectedUser._id
-            ? "edit up users information and details from here"
-            : "add up users information and details from here"
-        }
-        onClose={() => {
-          setSelectedUser({ userName: "", origin: "" });
-        }}
-      >
-        <UserForm
-          type={selectedUser._id ? "edit" : "add"}
-          isLoading={addLoading || editLoading}
-          handleSubmit={(values) => {
-            if (selectedUser._id) {
-              handleEditUser(selectedUser._id, values);
-            } else {
-              handleAddUser(values);
-            }
-          }}
-          initialValues={{
-            userName: selectedUser.userName || "",
-            origin: selectedUser.origin || "",
-            password: "",
-          }}
-        />
-      </CustomModal>
+      <UserModal
+        search={search}
+        ref={hubAdminModalRef}
+        paging={{ itemPerPage: TABLE_PAGE_LIMIT, page: activePage }}
+      />
+      <UpdateUserPassModal
+        search={search}
+        ref={hubUpdatePassModalRef}
+        paging={{ itemPerPage: TABLE_PAGE_LIMIT, page: activePage }}
+      />
     </Box>
   );
 };

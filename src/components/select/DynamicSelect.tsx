@@ -10,6 +10,7 @@ interface IDynamicSelect {
   label: string;
   selectLabel: string;
   selectValue: string;
+  disabled?: boolean;
 }
 
 const DynamicSelect: React.FC<IDynamicSelect> = ({
@@ -19,6 +20,7 @@ const DynamicSelect: React.FC<IDynamicSelect> = ({
   label,
   selectLabel,
   selectValue,
+  disabled = false,
 }) => {
   const { data, isLoading } = useSelectDataQuery({ url });
 
@@ -37,6 +39,7 @@ const DynamicSelect: React.FC<IDynamicSelect> = ({
 
   return (
     <Select
+      disabled={disabled}
       placeholder={label}
       data={selectData}
       {...formHandler.getInputProps(name)}
