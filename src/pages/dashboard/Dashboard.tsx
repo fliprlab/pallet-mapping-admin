@@ -1,16 +1,14 @@
-import { Box } from "@mantine/core";
-import CustomTable from "./components/CustomTable";
-import { styles } from "./useStyles";
+import { Box, Text } from "@mantine/core";
+import { COLORS } from "../../colors";
 
 const Dashboard = () => {
-  const { classes } = styles();
   return (
     <Box>
-      <Box className={classes.root}>
-        <h1 className={classes.heading}>Welcome To</h1>
-        <p className={classes.para}>UPN2 Store Dashboard</p>
+      <Box sx={{ marginBottom: "2em" }}>
+        <Text size={18} color={COLORS.black} ml={32}>
+          Dashboard
+        </Text>
       </Box>
-      <CustomTable />
     </Box>
   );
 };

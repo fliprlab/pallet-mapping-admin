@@ -1,7 +1,13 @@
+import { adminApis } from "./admin.api";
 import { authApis } from "./auth.api";
-import { bagApi } from "./bags.api";
+import { gridApis } from "./grid.api";
+import { hubAdminApis } from "./hubAdmin.api";
+import { locationApis } from "./locations.api";
 
 export const apiUrls = {
   ...authApis,
-  ...bagApi,
+  ...adminApis,
+  ...locationApis,
+  ...gridApis,
+  ...hubAdminApis,
 };

@@ -1,6 +1,7 @@
-import { AppShell } from "@mantine/core";
-
+import { AppShell, Box } from "@mantine/core";
 import { Outlet } from "react-router-dom";
+import TheHeader from "./TheHeader";
+import TheSidebar from "./TheSidebar";
 
 const TheLayout = () => {
   return (
@@ -13,8 +14,12 @@ const TheLayout = () => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
+      navbar={<TheSidebar />}
     >
-      <Outlet />
+      <Box sx={{ height: "100%" }}>
+        <TheHeader />
+        <Outlet />
+      </Box>
     </AppShell>
   );
 };
