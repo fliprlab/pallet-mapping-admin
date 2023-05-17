@@ -7,10 +7,19 @@ import ProtectedRoute from "../routers/Protected.route";
 import Locations from "../pages/locations/Locations";
 import GridList from "../pages/grid-list/GridList";
 import HubAdmin from "../pages/hub-admin";
+import CheckAuthPage from "../pages/checkAuthPage";
+import HubProtectedRoute from "../routers/HubProtected.route";
+import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
+import HubUsers from "../pages/hub-pages/users/HubUsers";
+import HubGridList from "../pages/hub-pages/grid-list/HubGridList";
 
 export const appRouter = createBrowserRouter([
   {
     path: "/",
+    element: <CheckAuthPage />,
+  },
+  {
+    path: "admin",
     element: <ProtectedRoute />,
     children: [
       {
@@ -39,6 +48,25 @@ export const appRouter = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/hub",
+    element: <HubProtectedRoute />,
+    children: [
+      {
+        path: "dashboard",
+        element: <HubDashboard />,
+      },
+      {
+        path: "users",
+        element: <HubUsers />,
+      },
+      {
+        path: "grid-list",
+        element: <HubGridList />,
+      },
+    ],
     errorElement: <ErrorPage />,
   },
 ]);

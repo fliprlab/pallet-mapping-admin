@@ -1,21 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { request } from "../../services/axios.service";
-import { apiUrls } from "../api-urls";
+
+import { apiUrlHub } from "../api-urls-hub";
 
 const getProfile = async () => {
   const response: TServerResponse = await request({
-    url: apiUrls.GET_PROFILE,
+    url: apiUrlHub.GET_PROFILE,
     method: "GET",
   });
 
   return response;
 };
 
-export const useCheckAuthenticated = (
+export const useCheckHubAuthenthicated = (
   onSuccess: TOnSuccessHandle,
   enabled?: boolean
 ) => {
-  return useQuery(["admin", "get-profile"], getProfile, {
+  return useQuery(["hub", "get-profile"], getProfile, {
     onSuccess,
     onError: () => {
       window.location.replace("/login");

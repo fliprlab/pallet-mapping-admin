@@ -4,6 +4,16 @@ export interface IUserFormValues {
   password: string;
 }
 
+export interface IHubUserFormValues {
+  userName: string;
+  password: string;
+}
+
+export const HubUserInitialValues: IHubUserFormValues = {
+  userName: "",
+  password: "",
+};
+
 export const UserInitialValues: IUserFormValues = {
   userName: "",
   origin: "",

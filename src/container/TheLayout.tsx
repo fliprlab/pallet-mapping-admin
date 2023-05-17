@@ -3,7 +3,11 @@ import { Outlet } from "react-router-dom";
 import TheHeader from "./TheHeader";
 import TheSidebar from "./TheSidebar";
 
-const TheLayout = () => {
+interface IProps {
+  navs: TSidebar[];
+}
+
+const TheLayout = ({ navs }: IProps) => {
   return (
     <AppShell
       styles={{
@@ -14,7 +18,7 @@ const TheLayout = () => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<TheSidebar />}
+      navbar={<TheSidebar navs={navs} />}
     >
       <Box sx={{ height: "100%" }}>
         <TheHeader />

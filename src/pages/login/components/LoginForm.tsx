@@ -10,9 +10,10 @@ import { INITIALVALUES } from "../../../initial-values";
 
 interface IProps {
   refetch: any;
+  hubRefetch: any;
 }
 
-const LoginForm: React.FC<IProps> = ({ refetch }) => {
+const LoginForm: React.FC<IProps> = ({ refetch, hubRefetch }) => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const formHandler = useForm({
     initialValues: INITIALVALUES.loginInitialValues,
@@ -28,7 +29,18 @@ const LoginForm: React.FC<IProps> = ({ refetch }) => {
         formHandler.reset();
         const secret: any = process.env.REACT_APP_SECRET_KEY;
         sessionStorage.setItem(secret, res.data);
-        refetch();
+        sessionStorage.setItem("role", res.extraData ?? "undefined");
+
+        if (res.extraData === "admin") {
+          refetch();
+        } else if (res.extraData === "hub-admin") {
+          hubRefetch();
+        } else {
+          showNotification({
+            message: "Invalid Role.",
+            color: "red",
+          });
+        }
       } else {
         showNotification({
           message: res.data.message,
@@ -36,7 +48,7 @@ const LoginForm: React.FC<IProps> = ({ refetch }) => {
         });
       }
     },
-    [mutateAsync, formHandler, refetch]
+    [mutateAsync, formHandler, refetch, hubRefetch]
   );
 
   return (
@@ -44,7 +56,7 @@ const LoginForm: React.FC<IProps> = ({ refetch }) => {
       <Box my={15}>
         <TextInput
           withAsterisk
-          type={"email"}
+          type={"text"}
           placeholder="Username"
           {...formHandler.getInputProps("username")}
         />
