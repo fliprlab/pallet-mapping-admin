@@ -1,6 +1,5 @@
 import React from "react";
 import { UnstyledButton, Group, Text, Box } from "@mantine/core";
-import { naves } from "./navs";
 import { useMatch, useNavigate } from "react-router-dom";
 import { COLORS } from "../colors";
 import { ICONS } from "../icons";
@@ -71,8 +70,8 @@ const MainLink = ({
   );
 };
 
-export const MainLinks = (props: { hidden: boolean }) => {
-  const links = naves.map((link) => (
+export const MainLinks = (props: { hidden: boolean; navs: TSidebar[] }) => {
+  const links = props.navs.map((link) => (
     <MainLink {...link} key={link.label} hidden={props.hidden} />
   ));
   return <div>{links}</div>;

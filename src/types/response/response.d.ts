@@ -5,6 +5,7 @@ type TServerResponse = {
   message: string;
   data?: any;
   pageData?: any;
+  extraData?: string;
 };
 
 type TOnSuccessHandle = (res: TServerResponse) => void;

@@ -9,7 +9,11 @@ const TheHeader = () => {
 
   return (
     <Box className={classes.header}>
-      <Flex onClick={() => logoutUser()} align={"center"}>
+      <Flex
+        onClick={() => logoutUser()}
+        align={"center"}
+        sx={{ cursor: "pointer" }}
+      >
         <img src={ICONS.logout} className={classes.icon} alt="logout" />
         <Text size={16} weight="500" color={COLORS.primary}>
           Logout

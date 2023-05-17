@@ -1,21 +1,42 @@
+import React, { useCallback, useEffect } from "react";
 import { Box, Grid, LoadingOverlay, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { COLORS } from "../../colors";
 import { useCheckAuthenticated } from "../../hooks/auth/useCheckAuthenthicated";
-import { checkUserAuthenticate } from "../../services/authenticate.service";
+import {
+  checkHubUserAuthenticate,
+  checkUserAuthenticate,
+} from "../../services/authenticate.service";
 import LoginForm from "./components/LoginForm";
 import RightBlock from "./components/RightBlock";
 import { styles } from "./Login.styles";
+import { useCheckHubAuthenthicated } from "../../hooks/auth/useCheckHubAuthenthicated";
 
 const Login = () => {
   const { classes } = styles();
 
   const navigate = useNavigate();
-  const { isLoading, refetch } = useCheckAuthenticated((res) =>
+  const { isFetching, refetch } = useCheckAuthenticated((res) =>
     checkUserAuthenticate(res, navigate)
   );
 
-  if (isLoading) {
+  const { isFetching: hubLoading, refetch: hubRefetch } =
+    useCheckHubAuthenthicated((res) => checkHubUserAuthenticate(res, navigate));
+
+  const checkAuth = useCallback(() => {
+    const role = sessionStorage.getItem("role");
+    if (role === "admin") {
+      refetch();
+    } else if (role === "hub-admin") {
+      hubRefetch();
+    }
+  }, [refetch, hubRefetch]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isFetching || hubLoading) {
     return <LoadingOverlay visible={true} overlayBlur={2} />;
   }
 
@@ -31,7 +52,7 @@ const Login = () => {
               Welcome Back,
             </Text>
           </Box>
-          <LoginForm refetch={refetch} />
+          <LoginForm refetch={refetch} hubRefetch={hubRefetch} />
         </Box>
       </Grid.Col>
       <Grid.Col span={7} className={classes.rightContainer}>

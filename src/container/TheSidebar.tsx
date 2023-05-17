@@ -3,7 +3,11 @@ import React, { memo, useState } from "react";
 import { COLORS } from "../colors";
 import { MainLinks } from "./MainLinks";
 
-const TheSidebar = () => {
+interface IProps {
+  navs: TSidebar[];
+}
+
+const TheSidebar = ({ navs }: IProps) => {
   const { classes } = useStyles();
   const [hidden, setHidden] = useState(true);
   return (
@@ -23,7 +27,7 @@ const TheSidebar = () => {
         />
       </Box>
       <Box>
-        <MainLinks hidden={hidden} />
+        <MainLinks hidden={hidden} navs={navs} />
       </Box>
     </Box>
   );

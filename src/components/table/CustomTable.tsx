@@ -16,6 +16,7 @@ interface IProps {
     setActivePage: React.Dispatch<React.SetStateAction<number>>;
     pagedData: { total: number };
   };
+  filterHeader?: ReactNode;
 }
 
 const CustomTable: React.FC<IProps> = ({
@@ -23,6 +24,7 @@ const CustomTable: React.FC<IProps> = ({
   columns,
   isLoading,
   paginationProps,
+  filterHeader,
 }) => {
   const { classes } = styles();
 
@@ -36,6 +38,7 @@ const CustomTable: React.FC<IProps> = ({
             // striped
             style={{ textAlign: "center" }}
           >
+            {filterHeader && filterHeader}
             <thead>
               <tr>
                 {columns.map((item, index) => {

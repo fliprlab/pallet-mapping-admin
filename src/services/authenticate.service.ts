@@ -9,7 +9,30 @@ export const checkUserAuthenticate = (
     sessionStorage.clear();
     navigation("/login");
   } else if (data.status === "success") {
-    navigation("/dashboard");
+    console.log("success----admin---");
+
+    navigation("/admin/dashboard");
+  } else if (data.status === "error") {
+    navigation("/login");
+    showNotification({
+      title: data.title,
+      message: data.message,
+      color: "red",
+    });
+  }
+};
+
+export const checkHubUserAuthenticate = (
+  data: any,
+  navigation: NavigateFunction
+) => {
+  console.log("data", data);
+
+  if (data.status === 401) {
+    sessionStorage.clear();
+    navigation("/login");
+  } else if (data.status === "success") {
+    navigation("/hub/dashboard");
   } else if (data.status === "error") {
     navigation("/login");
     showNotification({

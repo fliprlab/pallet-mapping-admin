@@ -1,35 +1,35 @@
 import { ICONS } from "../icons";
 
-export const naves = [
+export const navs: TSidebar[] = [
   {
     icon: ICONS.home,
     activeIcon: ICONS.home_active,
     label: "Dashboard",
-    to: "/dashboard",
+    to: "/admin/dashboard",
   },
   {
     icon: ICONS.user,
     activeIcon: ICONS.active_user,
     label: "Hub Admin",
-    to: "/hub-admin",
+    to: "/admin/hub-admin",
   },
   {
     icon: ICONS.user,
     activeIcon: ICONS.active_user,
     label: "Users",
-    to: "/users",
+    to: "/admin/users",
   },
   {
     icon: ICONS.location,
     activeIcon: ICONS.location_active,
     label: "Locations",
-    to: "/locations",
+    to: "/admin/locations",
   },
   {
     icon: ICONS.grid,
     activeIcon: ICONS.grid_active,
     label: "Grid List",
-    to: "/grid-list",
+    to: "/admin/grid-list",
   },
   // {
   //   icon: ICONS.scan,
