@@ -8,7 +8,7 @@ WORKDIR /usr/app
 COPY package.json .
 RUN npm i --force
 COPY . .
-RUN npm run build-prod
+RUN npm run build-dev
 
 # Nginx Block
 FROM nginx:1.23-alpine
