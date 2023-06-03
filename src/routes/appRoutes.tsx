@@ -30,10 +30,10 @@ export const appRouter = createBrowserRouter([
         path: "hub-admin",
         element: <HubAdmin />,
       },
-      {
-        path: "users",
-        element: <Users />,
-      },
+      // {
+      //   path: "users",
+      //   element: <Users />,
+      // },
       {
         path: "locations",
         element: <Locations />,
