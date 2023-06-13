@@ -44,6 +44,8 @@ const HubGridList = () => {
     }
   }, [data, isLoading]);
 
+  console.log("grids", grids);
+
   return (
     <Box>
       <Flex
