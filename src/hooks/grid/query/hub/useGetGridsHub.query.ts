@@ -14,10 +14,16 @@ const get = async (params: Partial<TPaging>, filter: IHubGridListFilter) => {
 
 export const useGetGridsHubQuery = (
   params: Partial<TPaging>,
-  filter: IHubGridListFilter
+  filter: IHubGridListFilter,
+  option: {
+    enabled?: boolean;
+    onSuccess?: TOnSuccessHandle;
+  }
 ) => {
+  const { enabled = true, onSuccess } = option;
   return useQuery(
     ["admin", "get-grids", params.itemPerPage, params.page, filter],
-    () => get(params, filter)
+    () => get(params, filter),
+    { enabled: enabled, onSuccess }
   );
 };

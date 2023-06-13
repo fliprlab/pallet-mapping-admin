@@ -6,11 +6,14 @@ import { COLORS } from "../../../colors";
 import CustomTable from "../../../components/table/CustomTable";
 import FilterHeader from "./component/FilterHeader";
 import { COLUMNS } from "../../../columns";
+import CustomTableWithHeader from "../../../components/table/CustomTableWithHeader";
+import DownloadBtn from "./component/DownloadBtn";
 
 export interface IHubGridListFilter {
   sortBy: "ascending" | "descending" | "";
   destination: string;
   status: string;
+  search: string;
 }
 
 const HubGridList = () => {
@@ -20,6 +23,7 @@ const HubGridList = () => {
     sortBy: "",
     destination: "",
     status: "",
+    search: "",
   });
 
   const { isLoading, data } = useGetGridsHubQuery(
@@ -27,7 +31,8 @@ const HubGridList = () => {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
     },
-    filter
+    filter,
+    {}
   );
 
   const grids = useMemo(() => {
@@ -38,6 +43,7 @@ const HubGridList = () => {
       return [];
     }
   }, [data, isLoading]);
+
   return (
     <Box>
       <Flex
@@ -50,7 +56,9 @@ const HubGridList = () => {
           Grid List Details
         </Text>
       </Flex>
-      <CustomTable
+      <CustomTableWithHeader
+        rightComponent={<DownloadBtn filter={filter} />}
+        onChangeSearch={(e) => setFilter((old) => ({ ...old, search: e }))}
         filterHeader={<FilterHeader filter={filter} updateFilter={setFilter} />}
         columns={COLUMNS.gridCloumnHub}
         data={grids}
