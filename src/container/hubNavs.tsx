@@ -13,10 +13,4 @@ export const hubNavs: TSidebar[] = [
     label: "Users",
     to: "/hub/users",
   },
-  {
-    icon: ICONS.grid,
-    activeIcon: ICONS.grid_active,
-    label: "Grid List",
-    to: "/hub/grid-list",
-  },
 ];

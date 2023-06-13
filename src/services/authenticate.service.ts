@@ -26,12 +26,11 @@ export const checkHubUserAuthenticate = (
   data: any,
   navigation: NavigateFunction
 ) => {
-  console.log("data", data);
-
   if (data.status === 401) {
     sessionStorage.clear();
     navigation("/login");
   } else if (data.status === "success") {
+    sessionStorage.setItem("location", data.data.origin.origin ?? "undefined");
     navigation("/hub/dashboard");
   } else if (data.status === "error") {
     navigation("/login");

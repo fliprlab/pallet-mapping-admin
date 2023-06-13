@@ -11,7 +11,6 @@ import CheckAuthPage from "../pages/checkAuthPage";
 import HubProtectedRoute from "../routers/HubProtected.route";
 import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
 import HubUsers from "../pages/hub-pages/users/HubUsers";
-import HubGridList from "../pages/hub-pages/grid-list/HubGridList";
 
 export const appRouter = createBrowserRouter([
   {
@@ -61,10 +60,6 @@ export const appRouter = createBrowserRouter([
       {
         path: "users",
         element: <HubUsers />,
-      },
-      {
-        path: "grid-list",
-        element: <HubGridList />,
       },
     ],
     errorElement: <ErrorPage />,

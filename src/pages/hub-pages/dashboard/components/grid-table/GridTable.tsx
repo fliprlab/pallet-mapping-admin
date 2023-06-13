@@ -1,11 +1,18 @@
 import React, { memo, useMemo, useState } from "react";
-import { IHubGridListFilter } from "../../../grid-list/HubGridList";
 import { useGetGridsHubQuery } from "../../../../../hooks/grid/query/hub/useGetGridsHub.query";
 import { TABLE_PAGE_LIMIT } from "../../../../../constants";
 import CustomTableWithHeader from "../../../../../components/table/CustomTableWithHeader";
 import { COLUMNS } from "../../../../../columns";
 import FilterHeader from "./component/FilterHeader";
 import DownloadBtn from "./component/DownloadBtn";
+import { Box } from "@mantine/core";
+
+export interface IHubGridListFilter {
+  sortBy: "ascending" | "descending" | "";
+  destination: string;
+  status: string;
+  search: string;
+}
 
 const GridTable = () => {
   const [activePage, setActivePage] = useState(1);
@@ -36,15 +43,17 @@ const GridTable = () => {
   }, [data, isLoading]);
 
   return (
-    <CustomTableWithHeader
-      rightComponent={<DownloadBtn filter={filter} />}
-      onChangeSearch={(e) => setFilter((old) => ({ ...old, search: e }))}
-      filterHeader={<FilterHeader filter={filter} updateFilter={setFilter} />}
-      columns={COLUMNS.gridCloumnHub}
-      data={grids}
-      isLoading={isLoading}
-      paginationProps={{ activePage, pagedData, setActivePage }}
-    />
+    <Box mt={60}>
+      <CustomTableWithHeader
+        rightComponent={<DownloadBtn filter={filter} />}
+        onChangeSearch={(e) => setFilter((old) => ({ ...old, search: e }))}
+        filterHeader={<FilterHeader filter={filter} updateFilter={setFilter} />}
+        columns={COLUMNS.gridCloumnHub}
+        data={grids}
+        isLoading={isLoading}
+        paginationProps={{ activePage, pagedData, setActivePage }}
+      />
+    </Box>
   );
 };
 

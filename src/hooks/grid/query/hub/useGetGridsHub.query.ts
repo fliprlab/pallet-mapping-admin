@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { request } from "../../../../services/axios.service";
 import { apiUrlHub } from "../../../api-urls-hub";
-import { IHubGridListFilter } from "../../../../pages/hub-pages/grid-list/HubGridList";
+import { IHubGridListFilter } from "../../../../pages/hub-pages/dashboard/components/grid-table/GridTable";
 
 const get = async (params: Partial<TPaging>, filter: IHubGridListFilter) => {
   const response: TServerResponse = await request({

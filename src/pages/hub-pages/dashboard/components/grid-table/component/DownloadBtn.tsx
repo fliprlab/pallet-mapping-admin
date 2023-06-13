@@ -2,9 +2,9 @@ import React, { memo, Fragment, useRef, useState } from "react";
 import { ActionIcon, Tooltip } from "@mantine/core";
 import { CSVLink } from "react-csv";
 import moment from "moment";
-import { IHubGridListFilter } from "../../../../grid-list/HubGridList";
 import { useGetGridsHubQuery } from "../../../../../../hooks/grid/query/hub/useGetGridsHub.query";
 import { ICONS } from "../../../../../../icons";
+import { IHubGridListFilter } from "../GridTable";
 
 const getCSVData = (data: any[]) => {
   let csvData: any[] = [];
@@ -12,6 +12,7 @@ const getCSVData = (data: any[]) => {
   data.forEach((item) => {
     csvData.push({
       gridId: item.gridId,
+      virtualId: item.status === "unoccupied" ? "" : item.virtualId,
       palletId: item.status === "unoccupied" ? "" : item.palletId.name,
       destination: item.status === "unoccupied" ? "" : item.destination,
       status: item.status,
@@ -65,6 +66,7 @@ const DownloadBtn: React.FC<IProps> = ({ filter }) => {
         headers={[
           { label: "Grid ID", key: "gridId" },
           { label: "Pallet ID", key: "palletId" },
+          { label: "Virtual ID", key: "virtualId" },
           { label: "Time", key: "time" },
           { label: "Destination", key: "destination" },
           { label: "Status", key: "status" },
