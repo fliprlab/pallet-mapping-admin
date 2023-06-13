@@ -13,6 +13,13 @@ export const gridCloumnHub: TTableColumns[] = [
     ),
   },
   {
+    label: "Virtual ID",
+    key: "virtualId",
+    renderCell: (e) => (
+      <p>{e.status === "unoccupied" ? "" : e.virtualId || ""}</p>
+    ),
+  },
+  {
     label: "Time",
     key: "createdAt",
     renderCell: (e) => (
@@ -26,6 +33,9 @@ export const gridCloumnHub: TTableColumns[] = [
   {
     label: "Destination",
     key: "destination",
+    renderCell: (e) => (
+      <p>{e.status === "unoccupied" ? "" : e.destination || ""}</p>
+    ),
   },
   {
     label: "Status",

@@ -8,7 +8,7 @@ const DestinationGridBlock: React.FC<TGridOccupied> = ({
 }) => {
   const { classes } = useStyles();
   return (
-    <Grid.Col lg={4}>
+    <Grid.Col lg={3}>
       <Box className={classes.root}>
         <Flex align={"center"}>
           <img alt="location-on" width={35} src={ICONS.locationOn} />

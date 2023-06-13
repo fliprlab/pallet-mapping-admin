@@ -4,6 +4,7 @@ import { COLORS } from "../../../colors";
 import { useGetOccupiedGridDetailsQuery } from "../../../hooks/grid-occupied/query/useGetOccupiedGridDetails.query";
 import DestinationGridBlock from "./components/DestinationGridBlock";
 import GridCard from "./components/GridCard";
+import GridTable from "./components/grid-table/GridTable";
 
 const HubDashboard = () => {
   const { isLoading, data } = useGetOccupiedGridDetailsQuery();
@@ -18,11 +19,6 @@ const HubDashboard = () => {
 
   return (
     <Box>
-      <Box sx={{ marginBottom: "2em" }}>
-        <Text size={18} color={COLORS.black} ml={32}>
-          Dashboard
-        </Text>
-      </Box>
       <Container fluid mx={20}>
         <Grid gutter={25}>
           <Grid.Col span={12} sm={6} md={3}>
@@ -33,7 +29,7 @@ const HubDashboard = () => {
               bgColor="#00BE7A"
             />
           </Grid.Col>
-          <Grid.Col span={12} sm={6} md={4}>
+          <Grid.Col span={12} sm={6} md={3.5}>
             <GridCard
               title="Unoccupied Grid"
               number={14}
@@ -43,12 +39,13 @@ const HubDashboard = () => {
           </Grid.Col>
         </Grid>
 
-        <Grid gutter={25}>
+        <Grid gutter={25} mt={60}>
           {destinations.map((location) => (
             <DestinationGridBlock {...location} key={location._id} />
           ))}
         </Grid>
       </Container>
+      <GridTable />
     </Box>
   );
 };

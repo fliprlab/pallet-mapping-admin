@@ -1,25 +1,27 @@
-import { Box, Flex, Text } from "@mantine/core";
-import React, { useState, useMemo } from "react";
-import { TABLE_PAGE_LIMIT } from "../../../constants";
-import { useGetGridsHubQuery } from "../../../hooks/grid/query/hub/useGetGridsHub.query";
-import { COLORS } from "../../../colors";
-import CustomTable from "../../../components/table/CustomTable";
+import React, { memo, useMemo, useState } from "react";
+import { useGetGridsHubQuery } from "../../../../../hooks/grid/query/hub/useGetGridsHub.query";
+import { TABLE_PAGE_LIMIT } from "../../../../../constants";
+import CustomTableWithHeader from "../../../../../components/table/CustomTableWithHeader";
+import { COLUMNS } from "../../../../../columns";
 import FilterHeader from "./component/FilterHeader";
-import { COLUMNS } from "../../../columns";
+import DownloadBtn from "./component/DownloadBtn";
+import { Box } from "@mantine/core";
 
 export interface IHubGridListFilter {
   sortBy: "ascending" | "descending" | "";
   destination: string;
   status: string;
+  search: string;
 }
 
-const HubGridList = () => {
+const GridTable = () => {
   const [activePage, setActivePage] = useState(1);
   const [pagedData, setPagedData] = useState({ total: 0 });
   const [filter, setFilter] = useState<IHubGridListFilter>({
     sortBy: "",
     destination: "",
     status: "",
+    search: "",
   });
 
   const { isLoading, data } = useGetGridsHubQuery(
@@ -27,7 +29,8 @@ const HubGridList = () => {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
     },
-    filter
+    filter,
+    {}
   );
 
   const grids = useMemo(() => {
@@ -38,19 +41,12 @@ const HubGridList = () => {
       return [];
     }
   }, [data, isLoading]);
+
   return (
-    <Box>
-      <Flex
-        sx={{ marginBottom: "2em" }}
-        align={"center"}
-        justify={"space-between"}
-        px={32}
-      >
-        <Text size={18} color={COLORS.black}>
-          Grid List Details
-        </Text>
-      </Flex>
-      <CustomTable
+    <Box mt={60}>
+      <CustomTableWithHeader
+        rightComponent={<DownloadBtn filter={filter} />}
+        onChangeSearch={(e) => setFilter((old) => ({ ...old, search: e }))}
         filterHeader={<FilterHeader filter={filter} updateFilter={setFilter} />}
         columns={COLUMNS.gridCloumnHub}
         data={grids}
@@ -61,4 +57,4 @@ const HubGridList = () => {
   );
 };
 
-export default HubGridList;
+export default memo(GridTable);

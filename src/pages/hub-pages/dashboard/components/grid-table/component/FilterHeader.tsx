@@ -1,7 +1,8 @@
 import { Box, Button, Chip, Flex, Menu, createStyles } from "@mantine/core";
 import React from "react";
-import { IHubGridListFilter } from "../HubGridList";
-import { useGetLocationsHubQuery } from "../../../../hooks/locations/query/hub/useGetLocationsHub.query";
+
+import { useGetLocationsHubQuery } from "../../../../../../hooks/locations/query/hub/useGetLocationsHub.query";
+import { IHubGridListFilter } from "../GridTable";
 
 interface IFilterHeader {
   filter: IHubGridListFilter;
