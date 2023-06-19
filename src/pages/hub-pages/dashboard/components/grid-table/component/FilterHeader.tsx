@@ -24,10 +24,10 @@ const FilterHeader = (props: IFilterHeader) => {
             fontSize: 14,
             textAlign: "center",
           }}
-          colSpan={3}
+          colSpan={4}
         >
           <Flex align={"center"} ml={50}>
-            <Box>Short By</Box>
+            <Box>Sort By</Box>
             <Chip
               onChange={() =>
                 updateFilter((old) => ({ ...old, sortBy: "ascending" }))
