@@ -3,10 +3,18 @@ import React, { memo, useState, Fragment } from "react";
 import { ICONS } from "../../../../../../icons";
 import * as XLSX from "xlsx";
 import { showNotification } from "@mantine/notifications";
+import { useAddHubGridsMutation } from "../../../../../../hooks/hub-admin/mutation/useAddHubGrids.mutation";
+import { IHubGridListFilter } from "../GridTable";
+
+interface IProps {
+  filter: IHubGridListFilter;
+}
 
 const UploadBtn = () => {
   const [loading, setLoading] = useState(false);
   const [template, setTemplate] = useState<any>(undefined);
+
+  const { mutateAsync, isLoading } = useAddHubGridsMutation();
 
   const importTemp = async (importFile: any) => {
     setLoading(true);
@@ -23,13 +31,24 @@ const UploadBtn = () => {
         /* Convert array of arrays */
         const data = XLSX.utils.sheet_to_json(ws, { raw: true });
 
-        console.log("data--", data);
+        console.log("data", data);
 
-        setLoading(false);
+        const res = await mutateAsync({ grids: [] });
+
+        if (res.status === "success") {
+          showNotification({ message: res.message, color: "green" });
+        } else {
+          showNotification({
+            message: res.message ?? res.data.message,
+            color: "red",
+          });
+        }
       };
       reader.readAsBinaryString(file);
     } catch (error: any) {
       showNotification({ message: error.message, color: "red" });
+    } finally {
+      setLoading(false);
     }
   };
 
