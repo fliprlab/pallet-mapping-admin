@@ -18,6 +18,7 @@ import grid from "./grid.png";
 import grid_active from "./grid-active.png";
 import locationOn from "./location-on.png";
 import download from "./download.png";
+import upload from "./upload.png";
 export const ICONS = {
   home,
   user,
@@ -38,4 +39,5 @@ export const ICONS = {
   grid_active,
   locationOn,
   download,
+  upload,
 };

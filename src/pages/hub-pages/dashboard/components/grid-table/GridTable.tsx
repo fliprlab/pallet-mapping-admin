@@ -5,7 +5,8 @@ import CustomTableWithHeader from "../../../../../components/table/CustomTableWi
 import { COLUMNS } from "../../../../../columns";
 import FilterHeader from "./component/FilterHeader";
 import DownloadBtn from "./component/DownloadBtn";
-import { Box } from "@mantine/core";
+import { Box, Flex } from "@mantine/core";
+import UploadBtn from "./component/UploadBtn";
 
 export interface IHubGridListFilter {
   sortBy: "ascending" | "descending" | "";
@@ -24,7 +25,7 @@ const GridTable = () => {
     search: "",
   });
 
-  const { isLoading, data } = useGetGridsHubQuery(
+  const { isLoading, data, refetch } = useGetGridsHubQuery(
     {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
@@ -45,7 +46,16 @@ const GridTable = () => {
   return (
     <Box mt={60}>
       <CustomTableWithHeader
-        rightComponent={<DownloadBtn filter={filter} />}
+        rightComponent={
+          <Flex>
+            <UploadBtn
+              refetchData={() => {
+                refetch();
+              }}
+            />
+            <DownloadBtn filter={filter} />
+          </Flex>
+        }
         onChangeSearch={(e) => setFilter((old) => ({ ...old, search: e }))}
         filterHeader={<FilterHeader filter={filter} updateFilter={setFilter} />}
         columns={COLUMNS.gridCloumnHub}
