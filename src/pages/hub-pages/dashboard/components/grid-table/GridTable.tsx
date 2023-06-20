@@ -25,7 +25,7 @@ const GridTable = () => {
     search: "",
   });
 
-  const { isLoading, data } = useGetGridsHubQuery(
+  const { isLoading, data, refetch } = useGetGridsHubQuery(
     {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
@@ -48,7 +48,11 @@ const GridTable = () => {
       <CustomTableWithHeader
         rightComponent={
           <Flex>
-            <UploadBtn />
+            <UploadBtn
+              refetchData={() => {
+                refetch();
+              }}
+            />
             <DownloadBtn filter={filter} />
           </Flex>
         }
