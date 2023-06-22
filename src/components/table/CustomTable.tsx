@@ -17,6 +17,7 @@ interface IProps {
     pagedData: { total: number };
   };
   filterHeader?: ReactNode;
+  fontSize?: number;
 }
 
 const CustomTable: React.FC<IProps> = ({
@@ -25,6 +26,7 @@ const CustomTable: React.FC<IProps> = ({
   isLoading,
   paginationProps,
   filterHeader,
+  fontSize = 16,
 }) => {
   const { classes } = styles();
 
@@ -46,7 +48,7 @@ const CustomTable: React.FC<IProps> = ({
                     <th
                       key={`${"_" + index}`}
                       className={classes.tHead}
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", fontSize: fontSize }}
                     >
                       {item.label}
                     </th>
@@ -55,30 +57,40 @@ const CustomTable: React.FC<IProps> = ({
               </tr>
             </thead>
             <tbody>
-              {data.map((item: any, index) => {
-                return (
-                  <tr
-                    key={`${"_" + index}`}
-                    style={{
-                      backgroundColor: index % 2 ? COLORS.white : COLORS.grey,
-                    }}
-                  >
-                    {columns.map((column, i) => {
-                      return (
-                        <td key={`${"_" + i}`} className={classes.tBody}>
-                          {column.renderCell ? (
-                            <Flex justify={"center"}>
-                              {column.renderCell(item)}
-                            </Flex>
-                          ) : (
-                            item[column.key]
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
+              {data.length === 0 && (
+                <tr>
+                  <td colSpan={columns.length}>No Data</td>
+                </tr>
+              )}
+              {data.length > 0 &&
+                data.map((item: any, index) => {
+                  return (
+                    <tr
+                      key={`${"_" + index}`}
+                      style={{
+                        backgroundColor: index % 2 ? COLORS.white : COLORS.grey,
+                      }}
+                    >
+                      {columns.map((column, i) => {
+                        return (
+                          <td
+                            key={`${"_" + i}`}
+                            className={classes.tBody}
+                            style={{ fontSize: fontSize }}
+                          >
+                            {column.renderCell ? (
+                              <Flex justify={"center"}>
+                                {column.renderCell(item)}
+                              </Flex>
+                            ) : (
+                              item[column.key]
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
             </tbody>
           </Table>
         </Box>
@@ -119,12 +131,11 @@ const styles = createStyles({
   },
   tHead: {
     fontWeight: 600,
-    fontSize: "16px !important",
+
     color: "#000 !important",
     textAlign: "center",
   },
   tBody: {
-    fontSize: "16px !important",
     fontWeight: 300,
     color: "#000",
   },

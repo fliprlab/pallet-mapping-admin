@@ -17,6 +17,7 @@ interface IProps {
     pagedData: { total: number };
   };
   filterHeader?: ReactNode;
+  fontSize?:number
 }
 
 const CustomTableWithHeader: React.FC<IProps> = ({
@@ -28,6 +29,7 @@ const CustomTableWithHeader: React.FC<IProps> = ({
   isLoading,
   paginationProps,
   filterHeader,
+  fontSize
 }) => {
   const { classes } = styles();
 
@@ -46,6 +48,7 @@ const CustomTableWithHeader: React.FC<IProps> = ({
         data={data}
         isLoading={isLoading}
         paginationProps={paginationProps}
+        fontSize={fontSize}
       />
     </Box>
   );
@@ -67,18 +70,5 @@ const styles = createStyles({
     alignItems: "center",
     display: "flex",
   },
-  tableContainer: {
-    // padding: 18,
-  },
-  tHead: {
-    fontWeight: 600,
-    fontSize: "16px !important",
-    color: "#000 !important",
-    textAlign: "center",
-  },
-  tBody: {
-    fontSize: "16px !important",
-    fontWeight: 300,
-    color: "#000",
-  },
+
 });
