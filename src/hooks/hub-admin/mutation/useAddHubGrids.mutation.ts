@@ -1,7 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
-import { apiUrls } from "../../api-urls";
-import { IHubAdmin } from "../../../initial-values/hub-admin/hub-admin.values";
 import { apiUrlHub } from "../../api-urls-hub";
 
 const create = async (data: { grids: string[] }) => {
@@ -18,6 +16,7 @@ export const useAddHubGridsMutation = () => {
   return useMutation(create, {
     onSuccess: () => {
       queryClient.invalidateQueries(["hub", "get-grids"]);
+      queryClient.invalidateQueries(["hub", "get-grid-count"]);
     },
   });
 };
