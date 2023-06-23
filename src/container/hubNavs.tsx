@@ -14,8 +14,8 @@ export const hubNavs: TSidebar[] = [
     to: "/hub/users",
   },
   {
-    icon: ICONS.user,
-    activeIcon: ICONS.active_user,
+    icon: ICONS.listItems,
+    activeIcon: ICONS.listItems_active,
     label: "Items",
     to: "/hub/items",
   },

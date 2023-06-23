@@ -19,6 +19,8 @@ import grid_active from "./grid-active.png";
 import locationOn from "./location-on.png";
 import download from "./download.png";
 import upload from "./upload.png";
+import listItems from "./listItems.png";
+import listItems_active from "./listItems_active.png";
 export const ICONS = {
   home,
   user,
@@ -40,4 +42,6 @@ export const ICONS = {
   locationOn,
   download,
   upload,
+  listItems,
+  listItems_active,
 };

@@ -28,7 +28,10 @@ const HubDashboard = () => {
     if (!gridCountLoading && gridCount) {
       return gridCount.data;
     } else {
-      return;
+      return {
+        total: 0,
+        unoccupied: 0,
+      };
     }
   }, [gridCountLoading, gridCount]);
 
@@ -39,7 +42,7 @@ const HubDashboard = () => {
           <Grid.Col span={12} sm={6} md={3}>
             <GridCard
               title="TOTAL Grid"
-              number={cardData.total ?? 0}
+              number={cardData.total}
               para="Total Number of Grids"
               bgColor="#00BE7A"
             />
@@ -47,7 +50,7 @@ const HubDashboard = () => {
           <Grid.Col span={12} sm={6} md={3.5}>
             <GridCard
               title="Unoccupied Grid"
-              number={cardData.unoccupied ?? 0}
+              number={cardData.unoccupied}
               para="Total Number of Unoccupied  Grids"
               bgColor="#E78C04"
             />
