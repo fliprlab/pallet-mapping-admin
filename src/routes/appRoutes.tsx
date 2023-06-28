@@ -12,6 +12,7 @@ import HubProtectedRoute from "../routers/HubProtected.route";
 import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
 import HubUsers from "../pages/hub-pages/users/HubUsers";
 import HubItemTable from "../pages/hub-pages/itemTable/HubItemTable";
+import Items from "../pages/items/Items";
 
 export const appRouter = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "grid-list",
         element: <GridList />,
+      },
+      {
+        path: "items",
+        element: <Items />,
       },
     ],
     errorElement: <ErrorPage />,

@@ -16,7 +16,7 @@ const UploadBtn: React.FC<IProps> = ({ refetchData }) => {
   const { mutateAsync, isLoading } = useAddHubGridsMutation();
 
   const resetFile = () => {
-    if (inputFileRef && inputFileRef.current) {
+    if (inputFileRef.current) {
       inputFileRef.current.files = null;
       inputFileRef.current.value = "";
     }
@@ -35,7 +35,7 @@ const UploadBtn: React.FC<IProps> = ({ refetchData }) => {
         const wsname = wb.SheetNames[0];
         const ws = wb.Sheets[wsname];
         /* Convert array of arrays */
-        const data = await XLSX.utils.sheet_to_json(ws, { raw: true });
+        const data = XLSX.utils.sheet_to_json(ws, { raw: true });
 
         const res = await mutateAsync({
           grids: data.map((item: any) => item["GRID ID"]),
@@ -79,7 +79,6 @@ const UploadBtn: React.FC<IProps> = ({ refetchData }) => {
         type="file"
         onChange={(e: any) => {
           if (e.target.files?.length > 0) {
-            // setTemplate(e.target.files[0]);
             importTemp(e.target.files[0]);
           }
         }}

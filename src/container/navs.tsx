@@ -13,12 +13,7 @@ export const navs: TSidebar[] = [
     label: "Hub Admin",
     to: "/admin/hub-admin",
   },
-  // {
-  //   icon: ICONS.user,
-  //   activeIcon: ICONS.active_user,
-  //   label: "Users",
-  //   to: "/admin/users",
-  // },
+
   {
     icon: ICONS.location,
     activeIcon: ICONS.location_active,
@@ -30,6 +25,12 @@ export const navs: TSidebar[] = [
     activeIcon: ICONS.grid_active,
     label: "Grid List",
     to: "/admin/grid-list",
+  },
+  {
+    icon: ICONS.grid,
+    activeIcon: ICONS.grid_active,
+    label: "Items",
+    to: "/admin/items",
   },
   // {
   //   icon: ICONS.scan,

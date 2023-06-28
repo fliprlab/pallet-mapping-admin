@@ -7,10 +7,15 @@ interface IProps {
   title: string;
 }
 
-const OutlineButton: React.FC<IProps> = ({ onClick, title }) => {
+const OutlineButton: React.FC<IProps> = ({ onClick, title, ...props }) => {
   const { classes } = useStyles();
   return (
-    <Button variant="outline" className={classes.root} onClick={onClick}>
+    <Button
+      {...props}
+      variant="outline"
+      className={classes.root}
+      onClick={onClick}
+    >
       {title}
     </Button>
   );
