@@ -10,10 +10,19 @@ export const locationsItemsColumns: TTableColumns[] = [
     label: "Destination",
   },
   {
+    key: "pallet",
+    label: "Pallet Id",
+    renderCell: (e) => <p>{e.pallet && e.pallet.name}</p>,
+  },
+  {
     label: "Created At",
     key: "createdAt",
     renderCell: (e) => (
       <p>{moment(e.createdAt).format("DD MMM YYYY, hh:mm a")}</p>
     ),
+  },
+  {
+    key: "status",
+    label: "Status",
   },
 ];
