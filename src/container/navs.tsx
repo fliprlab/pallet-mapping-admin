@@ -27,8 +27,8 @@ export const navs: TSidebar[] = [
     to: "/admin/grid-list",
   },
   {
-    icon: ICONS.grid,
-    activeIcon: ICONS.grid_active,
+    icon: ICONS.listItems,
+    activeIcon: ICONS.listItems_active,
     label: "Items",
     to: "/admin/items",
   },

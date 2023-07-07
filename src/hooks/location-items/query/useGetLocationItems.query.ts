@@ -2,17 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
 import { apiUrls } from "../../api-urls";
 
-const get = async (paging: TPaging) => {
+const get = async (paging: TPaging, prefix: TRolesPrefix) => {
   const response: TServerResponse = await request({
-    url: apiUrls.GET_LOCATION_ITEMS,
+    url: `/${prefix}/` + apiUrls.GET_LOCATION_ITEMS,
     method: "GET",
-    data: paging,
+    params: paging,
   });
   return response;
 };
 
-export const useGetLocationItemsQuery = (paging: TPaging) => {
-  return useQuery(["admin", "location-items", paging], () => get(paging), {
-    keepPreviousData: true,
-  });
+export const useGetLocationItemsQuery = (
+  paging: TPaging,
+  prefix: TRolesPrefix
+) => {
+  return useQuery(
+    [prefix, "location-items", paging],
+    () => get(paging, prefix),
+    {
+      keepPreviousData: true,
+    }
+  );
 };

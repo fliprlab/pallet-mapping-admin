@@ -1,11 +1,11 @@
 import React, { CSSProperties, Fragment, useState } from "react";
 
 import { useCSVReader } from "react-papaparse";
-import OutlineButton from "../../components/button/OutlineButton";
+import OutlineButton from "../../../components/button/OutlineButton";
 import { ActionIcon } from "@mantine/core";
 import { IconTrash, IconUpload } from "@tabler/icons";
-import { COLORS } from "../../colors";
-import { useCreateLocationItemMutation } from "../../hooks/location-items/mutation/createLocationItem.mutation";
+import { COLORS } from "../../../colors";
+import { useCreateLocationItemMutation } from "../../../hooks/location-items/mutation/createLocationItem.mutation";
 import { showNotification } from "@mantine/notifications";
 
 interface IUploadItemsBtn {
@@ -41,7 +41,7 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   const { CSVReader } = useCSVReader();
   const [items, setItems] = useState<TLocationItems[]>([]);
 
-  const { isLoading, mutateAsync } = useCreateLocationItemMutation("admin");
+  const { isLoading, mutateAsync } = useCreateLocationItemMutation("hub");
 
   const onUploadAccept = (results: any) => {
     const { data } = results as { data: any[] };
@@ -67,7 +67,7 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   };
 
   const handleUploadItems = async () => {
-    const res = await mutateAsync({ items, prefix: "admin" });
+    const res = await mutateAsync({ items, prefix: "hub" });
 
     if (res.status === "success") {
       setItems([]);
