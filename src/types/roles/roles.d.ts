@@ -1,0 +1,1 @@
+type TRolesPrefix = "admin" | "hub";

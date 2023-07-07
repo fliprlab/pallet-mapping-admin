@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ErrorPage from "../pages/error/ErrorPage";
 import Login from "../pages/login/Login";
-// import Users from "../pages/users";
 import ProtectedRoute from "../routers/Protected.route";
 import Locations from "../pages/locations/Locations";
 import GridList from "../pages/grid-list/GridList";
@@ -11,8 +10,8 @@ import CheckAuthPage from "../pages/checkAuthPage";
 import HubProtectedRoute from "../routers/HubProtected.route";
 import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
 import HubUsers from "../pages/hub-pages/users/HubUsers";
-import HubItemTable from "../pages/hub-pages/itemTable/HubItemTable";
 import Items from "../pages/items/Items";
+import LocationItems from "../pages/hub-pages/location-items/LocationItems";
 
 export const appRouter = createBrowserRouter([
   {
@@ -69,7 +68,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "items",
-        element: <HubItemTable />,
+        element: <LocationItems />,
       },
     ],
     errorElement: <ErrorPage />,

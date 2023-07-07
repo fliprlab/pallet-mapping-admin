@@ -1,15 +1,15 @@
 import { Box, Flex, Text } from "@mantine/core";
 import React, { memo, useMemo, useState } from "react";
-import { COLORS } from "../../colors";
-import CustomTable from "../../components/table/CustomTable";
+import { COLORS } from "../../../colors";
+import CustomTable from "../../../components/table/CustomTable";
 
-import { COLUMNS } from "../../columns";
-import { TABLE_PAGE_LIMIT } from "../../constants";
+import { COLUMNS } from "../../../columns";
+import { TABLE_PAGE_LIMIT } from "../../../constants";
 
 import UploadItemsBtn from "./UploadItemsBtn";
-import { useGetLocationItemsQuery } from "../../hooks/location-items/query/useGetLocationItems.query";
+import { useGetLocationItemsQuery } from "../../../hooks/location-items/query/useGetLocationItems.query";
 
-const Items = () => {
+const LocationItems = () => {
   const [activePage, setActivePage] = useState(1);
   const [pagedData, setPagedData] = useState({ total: 0 });
 
@@ -18,7 +18,7 @@ const Items = () => {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
     },
-    "admin"
+    "hub"
   );
 
   const items = useMemo(() => {
@@ -54,4 +54,4 @@ const Items = () => {
   );
 };
 
-export default memo(Items);
+export default memo(LocationItems);
