@@ -62,6 +62,8 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
       csvArray.map((item: any) => ({
         destination: item.shipment_destination_location_name,
         itemId: item.primary_key,
+        zone: item.Zone,
+        lpst: item.LPST,
       }))
     );
   };
@@ -70,6 +72,8 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
     const res = await mutateAsync({ items, prefix: "admin" });
 
     if (res.status === "success") {
+      console.log("res", res);
+
       setItems([]);
       showNotification({
         message: res.message,

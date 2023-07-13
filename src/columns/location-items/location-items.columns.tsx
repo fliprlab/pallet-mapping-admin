@@ -15,6 +15,14 @@ export const locationsItemsColumns: TTableColumns[] = [
     renderCell: (e) => <p>{e.pallet && e.pallet.name}</p>,
   },
   {
+    key: "zone",
+    label: "Zone",
+  },
+  {
+    key: "lpst",
+    label: "LPST",
+  },
+  {
     label: "Created At",
     key: "createdAt",
     renderCell: (e) => (

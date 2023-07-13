@@ -24,7 +24,6 @@ const Locations = () => {
     {
       onSuccess: (res) => {
         if (res.status === "success") {
-          console.log("res.data.pageData", res.pageData);
           setPagedData(res.pageData ? res.pageData : { total: 0 });
         } else {
           showNotification({
