@@ -62,6 +62,8 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
       csvArray.map((item: any) => ({
         destination: item.shipment_destination_location_name,
         itemId: item.primary_key,
+        zone: item.Zone,
+        lpst: item.LPST,
       }))
     );
   };
