@@ -1,5 +1,5 @@
-import { Box, Flex, Text } from "@mantine/core";
-import React, { useMemo, useRef, useState } from "react";
+import { Box, Flex, SegmentedControl, Text } from "@mantine/core";
+import React, { memo, useMemo, useRef, useState } from "react";
 import { COLORS } from "../../colors";
 import CustomTable from "../../components/table/CustomTable";
 import OutlineButton from "../../components/button/OutlineButton";
@@ -14,14 +14,15 @@ import { showNotification } from "@mantine/notifications";
 
 const GridList = () => {
   const modalRef = useRef<ICustomModalRef>(null);
-
   const [activePage, setActivePage] = useState(1);
   const [pagedData, setPagedData] = useState({ total: 0 });
+  const [active, setActive] = useState("active");
 
   const { isLoading, data } = useGetGridsQuery(
     {
       itemPerPage: TABLE_PAGE_LIMIT,
       page: activePage,
+      inactive: active,
     },
     {
       onSuccess: (res) => {
@@ -64,6 +65,17 @@ const GridList = () => {
           }}
         />
       </Flex>
+      <Flex px={32}>
+        <SegmentedControl
+          color="blue"
+          value={active}
+          onChange={(value) => setActive(value)}
+          data={[
+            { label: "Active", value: "active" },
+            { label: "In-Active", value: "in-active" },
+          ]}
+        />
+      </Flex>
       <CustomTable
         columns={COLUMNS.gridColumns}
         data={grids}
@@ -81,4 +93,4 @@ const GridList = () => {
   );
 };
 
-export default GridList;
+export default memo(GridList);

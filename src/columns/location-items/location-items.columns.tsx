@@ -1,5 +1,15 @@
 import moment from "moment";
 
+const status = (item: TLocationItems & { pallet: Object; status: string }) => {
+  if (item.status === "created" && item.pallet) {
+    return "sort";
+  } else if (item.status === "picked up") {
+    return "bagged";
+  } else {
+    return item.status;
+  }
+};
+
 export const locationsItemsColumns: TTableColumns[] = [
   {
     key: "itemId",
@@ -12,7 +22,7 @@ export const locationsItemsColumns: TTableColumns[] = [
   {
     key: "pallet",
     label: "Pallet Id",
-    renderCell: (e) => <p>{e.pallet && e.pallet.name}</p>,
+    renderCell: (e) => <p>{e?.pallet?.name}</p>,
   },
   {
     key: "zone",
@@ -32,5 +42,6 @@ export const locationsItemsColumns: TTableColumns[] = [
   {
     key: "status",
     label: "Status",
+    renderCell: (e) => <p>{status(e)}</p>,
   },
 ];
