@@ -79,6 +79,14 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
         message: res.message,
         color: "green",
       });
+
+      if (res.data.invalidLocation.length > 0) {
+        showNotification({
+          message: `Items of this location ${res.data.invalidLocation[0].destination} is not added 
+          Kindly add this location first.`,
+          color: "red",
+        });
+      }
     } else {
       showNotification({
         message: res.data.message,
