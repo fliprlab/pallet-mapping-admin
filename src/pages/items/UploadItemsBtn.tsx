@@ -7,6 +7,12 @@ import { IconTrash, IconUpload } from "@tabler/icons";
 import { COLORS } from "../../colors";
 import { useCreateLocationItemMutation } from "../../hooks/location-items/mutation/createLocationItem.mutation";
 import { showNotification } from "@mantine/notifications";
+import { useAppDispatch } from "../../app/hooks";
+import {
+  setLoading,
+  toggleDrawer,
+  updateItems,
+} from "../../app/reducers/upload-items/upload-items.reducer";
 
 interface IUploadItemsBtn {
   refetchData: () => void;
@@ -40,6 +46,7 @@ const styles = {
 const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   const { CSVReader } = useCSVReader();
   const [items, setItems] = useState<TLocationItems[]>([]);
+  const dispatch = useAppDispatch();
 
   const { isLoading, mutateAsync } = useCreateLocationItemMutation("admin");
 
@@ -69,29 +76,36 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   };
 
   const handleUploadItems = async () => {
-    const res = await mutateAsync({ items, prefix: "admin" });
+    dispatch(toggleDrawer());
+    dispatch(setLoading(true));
+    try {
+      const res = await mutateAsync({ items, prefix: "admin" });
 
-    if (res.status === "success") {
-      console.log("res", res);
-
-      setItems([]);
-      showNotification({
-        message: res.message,
-        color: "green",
-      });
-
-      if (res.data.invalidLocation.length > 0) {
+      if (res.status === "success") {
+        dispatch(updateItems({ ...res.data, validEntries: res.data.inserted }));
+        setItems([]);
         showNotification({
-          message: `Items of this location ${res.data.invalidLocation[0].destination} is not added 
+          message: res.message,
+          color: "green",
+        });
+
+        if (res.data.invalidLocation.length > 0) {
+          showNotification({
+            message: `Items of this location ${res.data.invalidLocation[0].destination} is not added 
           Kindly add this location first.`,
+            color: "red",
+          });
+        }
+      } else {
+        showNotification({
+          message: res.data.message,
           color: "red",
         });
       }
-    } else {
-      showNotification({
-        message: res.data.message,
-        color: "red",
-      });
+    } catch (error) {
+      dispatch(setLoading(false));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
