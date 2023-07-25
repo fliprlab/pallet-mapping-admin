@@ -4,6 +4,7 @@ import { gridApis } from "./grid.api";
 import { hubAdminApis } from "./hubAdmin.api";
 import { locationItemApis } from "./location-item.api";
 import { locationApis } from "./locations.api";
+import { palletsApi } from "./pallet.api";
 
 export const apiUrls = {
   ...authApis,
@@ -12,4 +13,5 @@ export const apiUrls = {
   ...gridApis,
   ...hubAdminApis,
   ...locationItemApis,
+  ...palletsApi,
 };

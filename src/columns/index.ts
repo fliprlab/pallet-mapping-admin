@@ -4,6 +4,7 @@ import { hubAdminsColumns } from "./hub-admin/hub-admin.columns";
 import { itemColumns } from "./item/ItemColumns";
 import { locationsItemsColumns } from "./location-items/location-items.columns";
 import { locationsColumns } from "./locations/locationsColumns";
+import { palletsColumns } from "./pallets/palletsColumns";
 import { userColumns } from "./user/userColumns";
 
 export const COLUMNS = {
@@ -14,4 +15,5 @@ export const COLUMNS = {
   hubAdminsColumns,
   itemColumns,
   locationsItemsColumns,
+  palletsColumns,
 };

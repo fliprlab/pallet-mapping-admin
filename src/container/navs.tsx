@@ -32,6 +32,12 @@ export const navs: TSidebar[] = [
     label: "Items",
     to: "/admin/items",
   },
+  {
+    icon: ICONS.listItems,
+    activeIcon: ICONS.listItems_active,
+    label: "Pallets",
+    to: "/admin/pallets",
+  },
   // {
   //   icon: ICONS.scan,
   //   activeIcon: ICONS.scan_active,
