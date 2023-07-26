@@ -7,7 +7,7 @@ import { TABLE_PAGE_LIMIT } from "../../constants";
 import { showNotification } from "@mantine/notifications";
 import { COLUMNS } from "../../columns";
 
-function Pallerts() {
+function Pallets() {
   const [pagedData, setPagedData] = useState({ total: 0 });
   const [activePage, setActivePage] = useState(1);
 
@@ -43,7 +43,7 @@ function Pallerts() {
     <Box>
       <Box sx={{ marginBottom: "2em" }}>
         <Text size={18} color={COLORS.black} ml={32}>
-          Locations
+          Pallets
         </Text>
       </Box>
       <CustomTableWithHeader
@@ -57,4 +57,4 @@ function Pallerts() {
   );
 }
 
-export default memo(Pallerts);
+export default memo(Pallets);

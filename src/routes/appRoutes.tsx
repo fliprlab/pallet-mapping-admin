@@ -12,7 +12,7 @@ import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
 import HubUsers from "../pages/hub-pages/users/HubUsers";
 import Items from "../pages/items/Items";
 import LocationItems from "../pages/hub-pages/location-items/LocationItems";
-import Pallerts from "../pages/pallets/Pallets";
+import Pallets from "../pages/pallets/Pallets";
 
 export const appRouter = createBrowserRouter([
   {
@@ -49,7 +49,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: "pallets",
-        element: <Pallerts />,
+        element: <Pallets />,
       },
     ],
     errorElement: <ErrorPage />,

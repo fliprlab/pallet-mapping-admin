@@ -13,4 +13,5 @@ type TLocationItems = {
   zone: string;
   lpst: string;
   reason?: string;
+  createdAt?: Date;
 };
