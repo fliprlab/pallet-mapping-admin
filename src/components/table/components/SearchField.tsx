@@ -1,6 +1,7 @@
 import { TextInput, createStyles } from "@mantine/core";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { COLORS } from "../../../colors";
+import { useDebouncedState } from "@mantine/hooks";
 
 interface IProps {
   onChangeText?: (value: string) => void;
@@ -8,13 +9,17 @@ interface IProps {
 
 const SearchField: React.FC<IProps> = ({ onChangeText }) => {
   const { classes } = useStyle();
+  const [value, setValue] = useDebouncedState("", 400);
+
+  useEffect(() => {
+    onChangeText && onChangeText(value);
+  }, [value, onChangeText]);
+
   return (
     <TextInput
       className={classes.root}
       placeholder="search"
-      onChange={(e) => {
-        onChangeText && onChangeText(e.target.value);
-      }}
+      onChange={(e) => setValue(e.target.value)}
     />
   );
 };
