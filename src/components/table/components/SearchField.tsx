@@ -13,7 +13,7 @@ const SearchField: React.FC<IProps> = ({ onChangeText }) => {
 
   useEffect(() => {
     onChangeText && onChangeText(value);
-  }, [value, onChangeText]);
+  }, [value]);
 
   return (
     <TextInput
