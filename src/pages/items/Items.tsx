@@ -8,6 +8,7 @@ import { useGetLocationItemsQuery } from "../../hooks/location-items/query/useGe
 import CustomTableWithHeader from "../../components/table/CustomTableWithHeader";
 import StatusMenu from "../../components/status-menu/StatusMenu";
 import { DateRangePicker, DateRangePickerValue } from "@mantine/dates";
+import DownloadItemsBtn from "./DownloadItemsBtn";
 
 const Items = () => {
   const [activePage, setActivePage] = useState(1);
@@ -52,7 +53,12 @@ const Items = () => {
           Items
         </Text>
 
-        <UploadItemsBtn refetchData={refetch} />
+        <Flex align={"center"}>
+          <UploadItemsBtn refetchData={refetch} />
+          <DownloadItemsBtn
+            filter={{ date: date, search: search, status: status }}
+          />
+        </Flex>
       </Flex>
       <CustomTableWithHeader
         rightComponent={

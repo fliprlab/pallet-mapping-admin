@@ -1,4 +1,4 @@
-import { Button, createStyles } from "@mantine/core";
+import { Button, ButtonProps, createStyles } from "@mantine/core";
 import React, { memo } from "react";
 import { COLORS } from "../../colors";
 
@@ -7,7 +7,11 @@ interface IProps {
   title: string;
 }
 
-const OutlineButton: React.FC<IProps> = ({ onClick, title, ...props }) => {
+const OutlineButton: React.FC<IProps & ButtonProps> = ({
+  onClick,
+  title,
+  ...props
+}) => {
   const { classes } = useStyles();
   return (
     <Button

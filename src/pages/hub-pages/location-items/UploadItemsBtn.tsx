@@ -22,7 +22,6 @@ const styles = {
   csvReader: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 10,
   } as CSSProperties,
   browseFile: {
     width: "20%",

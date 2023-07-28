@@ -2,9 +2,9 @@ import React, { memo, Fragment, useRef, useState } from "react";
 import { Tooltip } from "@mantine/core";
 import { CSVLink } from "react-csv";
 import moment from "moment";
-import { useGetLocationItemsQuery } from "../../hooks/location-items/query/useGetLocationItems.query";
+import { useGetLocationItemsQuery } from "../../../hooks/location-items/query/useGetLocationItems.query";
 import { DateRangePickerValue } from "@mantine/dates";
-import OutlineButton from "../../components/button/OutlineButton";
+import OutlineButton from "../../../components/button/OutlineButton";
 
 const status = (item: TLocationItems) => {
   if (item.status === "created" && item.pallet) {
@@ -47,7 +47,7 @@ const DownloadItemsBtn: React.FC<IProps> = ({ filter }) => {
 
   const { refetch, isFetching } = useGetLocationItemsQuery(
     { ...filter },
-    "admin",
+    "hub",
     {
       enabled: false,
 
