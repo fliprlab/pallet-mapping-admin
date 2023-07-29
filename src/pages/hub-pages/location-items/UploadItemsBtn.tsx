@@ -7,6 +7,12 @@ import { IconTrash, IconUpload } from "@tabler/icons";
 import { COLORS } from "../../../colors";
 import { useCreateLocationItemMutation } from "../../../hooks/location-items/mutation/createLocationItem.mutation";
 import { showNotification } from "@mantine/notifications";
+import { useAppDispatch } from "../../../app/hooks";
+import {
+  setLoading,
+  toggleDrawer,
+  updateItems,
+} from "../../../app/reducers/upload-items/upload-items.reducer";
 
 interface IUploadItemsBtn {
   refetchData: () => void;
@@ -16,7 +22,6 @@ const styles = {
   csvReader: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 10,
   } as CSSProperties,
   browseFile: {
     width: "20%",
@@ -40,7 +45,7 @@ const styles = {
 const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   const { CSVReader } = useCSVReader();
   const [items, setItems] = useState<TLocationItems[]>([]);
-
+  const dispatch = useAppDispatch();
   const { isLoading, mutateAsync } = useCreateLocationItemMutation("hub");
 
   const onUploadAccept = (results: any) => {
@@ -69,19 +74,28 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   };
 
   const handleUploadItems = async () => {
-    const res = await mutateAsync({ items, prefix: "hub" });
+    dispatch(toggleDrawer());
+    dispatch(setLoading(true));
+    try {
+      const res = await mutateAsync({ items, prefix: "hub" });
 
-    if (res.status === "success") {
-      setItems([]);
-      showNotification({
-        message: res.message,
-        color: "green",
-      });
-    } else {
-      showNotification({
-        message: res.data.message,
-        color: "red",
-      });
+      if (res.status === "success") {
+        dispatch(updateItems({ ...res.data, validEntries: res.data.inserted }));
+        setItems([]);
+        showNotification({
+          message: res.message,
+          color: "green",
+        });
+      } else {
+        showNotification({
+          message: res.data.message,
+          color: "red",
+        });
+      }
+    } catch (error) {
+      dispatch(setLoading(false));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

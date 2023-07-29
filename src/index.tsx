@@ -9,6 +9,8 @@ import { RouterProvider } from "react-router-dom";
 import { appRouter } from "./routes/appRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -23,14 +25,16 @@ const queryClient = new QueryClient({
 
 root.render(
   <React.Fragment>
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        <NotificationsProvider position="top-right">
-          <RouterProvider router={appRouter} />
-        </NotificationsProvider>
-      </MantineProvider>
-      <ReactQueryDevtools position="bottom-right" initialIsOpen={false} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <NotificationsProvider position="top-right">
+            <RouterProvider router={appRouter} />
+          </NotificationsProvider>
+        </MantineProvider>
+        <ReactQueryDevtools position="bottom-right" initialIsOpen={false} />
+      </QueryClientProvider>
+    </Provider>
   </React.Fragment>
 );
 

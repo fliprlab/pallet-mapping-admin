@@ -2,6 +2,7 @@ import { AppShell, Box } from "@mantine/core";
 import { Outlet } from "react-router-dom";
 import TheHeader from "./TheHeader";
 import TheSidebar from "./TheSidebar";
+import InvalidItemDrawer from "../components/invalid-items-drawer/InvalidItemDrawer";
 
 interface IProps {
   navs: TSidebar[];
@@ -24,6 +25,7 @@ const TheLayout = ({ navs }: IProps) => {
         <TheHeader />
         <Outlet />
       </Box>
+      <InvalidItemDrawer />
     </AppShell>
   );
 };
