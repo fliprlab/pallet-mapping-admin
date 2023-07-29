@@ -33,8 +33,8 @@ export const navs: TSidebar[] = [
     to: "/admin/items",
   },
   {
-    icon: ICONS.listItems,
-    activeIcon: ICONS.listItems_active,
+    icon: ICONS.pallet,
+    activeIcon: ICONS.palletActive,
     label: "Pallets",
     to: "/admin/pallets",
   },

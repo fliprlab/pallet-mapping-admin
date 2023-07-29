@@ -21,6 +21,10 @@ import download from "./download.png";
 import upload from "./upload.png";
 import listItems from "./listItems.png";
 import listItems_active from "./listItems_active.png";
+
+import pallet from "./pallet.png";
+import palletActive from "./pallet-active.png";
+
 export const ICONS = {
   home,
   user,
@@ -44,4 +48,6 @@ export const ICONS = {
   upload,
   listItems,
   listItems_active,
+  pallet,
+  palletActive,
 };

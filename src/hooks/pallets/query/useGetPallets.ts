@@ -2,7 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { request } from "../../../services/axios.service";
 import { apiUrls } from "../../api-urls";
 
-const get = async (params?: TPaging) => {
+interface TParams extends TPaging {
+  search: string;
+  status: string;
+}
+
+const get = async (params?: TParams) => {
   const response: TServerResponse = await request({
     url: apiUrls.GET_PALLETS,
     method: "GET",
@@ -11,10 +16,9 @@ const get = async (params?: TPaging) => {
   return response;
 };
 
-export const useGetPallets = (params?: TPaging, options?: TQueryOptions) => {
-  return useQuery(
-    ["admin", "get-pallets", params?.itemPerPage, params?.page],
-    () => get(params),
-    { ...options, keepPreviousData: true }
-  );
+export const useGetPallets = (params?: TParams, options?: TQueryOptions) => {
+  return useQuery(["admin", "get-pallets", params], () => get(params), {
+    ...options,
+    keepPreviousData: true,
+  });
 };
