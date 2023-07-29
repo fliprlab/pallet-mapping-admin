@@ -1,141 +1,63 @@
-import React, { CSSProperties, Fragment, useState } from "react";
-
-import { useCSVReader } from "react-papaparse";
-import OutlineButton from "../../components/button/OutlineButton";
-import { ActionIcon } from "@mantine/core";
-import { IconTrash, IconUpload } from "@tabler/icons";
-import { COLORS } from "../../colors";
+import React, { useRef, useState } from "react";
+import { ActionIcon, Button, FileButton, Group } from "@mantine/core";
 import { useCreateLocationItemMutation } from "../../hooks/location-items/mutation/createLocationItem.mutation";
-import { showNotification } from "@mantine/notifications";
+import { IconTrash } from "@tabler/icons";
 
 interface IUploadItemsBtn {
   refetchData: () => void;
 }
 
-const styles = {
-  csvReader: {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: 10,
-  } as CSSProperties,
-  browseFile: {
-    width: "20%",
-  } as CSSProperties,
-  acceptedFile: {
-    border: "1px solid #ccc",
-    height: 45,
-    lineHeight: 2.5,
-    paddingLeft: 10,
-    width: "80%",
-  } as CSSProperties,
-  remove: {
-    borderRadius: 0,
-    padding: "0 20px",
-  } as CSSProperties,
-  progressBarBackgroundColor: {
-    backgroundColor: "red",
-  } as CSSProperties,
-};
-
 const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
-  const { CSVReader } = useCSVReader();
-  const [items, setItems] = useState<TLocationItems[]>([]);
+  const [file, setFile] = useState<File | null>(null);
+  const resetRef = useRef<() => void>(null);
+
+  const clearFile = () => {
+    setFile(null);
+    resetRef.current?.();
+  };
 
   const { isLoading, mutateAsync } = useCreateLocationItemMutation("admin");
 
-  const onUploadAccept = (results: any) => {
-    const { data } = results as { data: any[] };
-    const csvArray: any[] = [];
+  // const handleUploadItems = async () => {
+  //   const res = await mutateAsync({ items, prefix: "admin" });
 
-    data.forEach((item: any[], i) => {
-      if (i > 0) {
-        let object: any = {};
+  //   if (res.status === "success") {
+  //     console.log("res", res);
 
-        item.forEach((value, index) => {
-          object[data[0][index]] = value;
-        });
+  //     setItems([]);
+  //     showNotification({
+  //       message: res.message,
+  //       color: "green",
+  //     });
 
-        csvArray.push(object);
-      }
-    });
-    setItems(
-      csvArray.map((item: any) => ({
-        destination: item.shipment_destination_location_name,
-        itemId: item.primary_key,
-        zone: item.Zone,
-        lpst: item.LPST,
-      }))
-    );
-  };
-
-  const handleUploadItems = async () => {
-    const res = await mutateAsync({ items, prefix: "admin" });
-
-    if (res.status === "success") {
-      console.log("res", res);
-
-      setItems([]);
-      showNotification({
-        message: res.message,
-        color: "green",
-      });
-
-      if (res.data.invalidLocation.length > 0) {
-        showNotification({
-          message: `Items of this location ${res.data.invalidLocation[0].destination} is not added 
-          Kindly add this location first.`,
-          color: "red",
-        });
-      }
-    } else {
-      showNotification({
-        message: res.data.message,
-        color: "red",
-      });
-    }
-  };
+  //     if (res.data.invalidLocation.length > 0) {
+  //       showNotification({
+  //         message: `Items of this location ${res.data.invalidLocation[0].destination} is not added
+  //         Kindly add this location first.`,
+  //         color: "red",
+  //       });
+  //     }
+  //   } else {
+  //     showNotification({
+  //       message: res.data.message,
+  //       color: "red",
+  //     });
+  //   }
+  // };
 
   return (
-    <CSVReader onUploadAccepted={onUploadAccept}>
-      {({ getRootProps, acceptedFile, getRemoveFileProps }: any) => (
-        <>
-          <div style={styles.csvReader}>
-            <OutlineButton
-              {...getRootProps()}
-              title={
-                acceptedFile && items.length > 0
-                  ? acceptedFile.name
-                  : "Upload Items"
-              }
-            />
-
-            {acceptedFile && items.length > 0 && (
-              <Fragment>
-                <ActionIcon
-                  disabled={isLoading}
-                  loading={isLoading}
-                  mx={10}
-                  size={36}
-                  style={{ borderColor: COLORS.primary, color: COLORS.primary }}
-                  variant="outline"
-                  onClick={handleUploadItems}
-                >
-                  <IconUpload />
-                </ActionIcon>
-                <ActionIcon
-                  size={36}
-                  color="red"
-                  variant="outline"
-                  {...getRemoveFileProps()}
-                >
-                  <IconTrash />
-                </ActionIcon>
-              </Fragment>
-            )}
-          </div>
-        </>
+    <Group position="center">
+      <FileButton resetRef={resetRef} onChange={setFile} accept=".csv">
+        {(props) => (
+          <Button {...props}>{file ? file.name : "Upload Items"}</Button>
+        )}
+      </FileButton>
+      {file && (
+        <ActionIcon disabled={!file} color="red" onClick={clearFile}>
+          <IconTrash color="red" />
+        </ActionIcon>
       )}
-    </CSVReader>
+    </Group>
   );
 };
 
