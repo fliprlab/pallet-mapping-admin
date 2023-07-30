@@ -1,16 +1,33 @@
-import { Box, Drawer, Loader } from "@mantine/core";
+import { Box, Drawer, Loader, Progress } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { toggleDrawer } from "../../app/reducers/upload-items/upload-items.reducer";
-import { memo } from "react";
+import {
+  setProgress,
+  toggleDrawer,
+} from "../../app/reducers/upload-items/upload-items.reducer";
+import { memo, useEffect } from "react";
 import ItemsList from "./components/ItemsList";
 
+import { useWebsocket } from "../../services/socket.service";
+
 const InvalidItemDrawer = () => {
-  const { drawerOpened, drawerLoading, items } = useAppSelector(
+  const { socket } = useWebsocket();
+  const { drawerOpened, drawerLoading, items, progress } = useAppSelector(
     (state) => state.uploadItems
   );
   const dispatch = useAppDispatch();
   const { duplicateEntries, invalidEntries, invalidLocation, validEntries } =
     items;
+
+  useEffect(() => {
+    socket &&
+      socket.on("progress", (percentage: number) => {
+        dispatch(setProgress(percentage));
+      });
+
+    return () => {
+      socket && socket.off("progress");
+    };
+  }, [dispatch, socket]);
 
   return (
     <Drawer
@@ -25,6 +42,13 @@ const InvalidItemDrawer = () => {
       padding={25}
     >
       <Box style={{ maxHeight: "90vh", overflow: "auto" }}>
+        <Progress
+          label={progress < 100 ? `${progress}%` : "Completed"}
+          color="green"
+          size={"xl"}
+          animate={progress < 100 ? true : false}
+          value={progress}
+        />
         {drawerLoading && (
           <Box
             display={"flex"}
