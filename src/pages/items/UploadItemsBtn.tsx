@@ -1,5 +1,5 @@
-import React, { Fragment, useRef, useState } from "react";
-import { ActionIcon, Button, FileButton, Group, Tooltip } from "@mantine/core";
+import React, { Fragment, memo, useRef, useState } from "react";
+import { ActionIcon, FileButton, Group } from "@mantine/core";
 import { useCreateLocationItemMutation } from "../../hooks/location-items/mutation/createLocationItem.mutation";
 import { IconDeviceFloppy, IconTrash } from "@tabler/icons";
 import { showNotification } from "@mantine/notifications";
@@ -9,6 +9,7 @@ import {
   toggleDrawer,
   updateItems,
 } from "../../app/reducers/upload-items/upload-items.reducer";
+import OutlineButton from "../../components/button/OutlineButton";
 
 interface IUploadItemsBtn {
   refetchData: () => void;
@@ -35,12 +36,11 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
     formData.append("uploadFile", file);
     try {
       const res = await mutateAsync({ formData: formData, prefix: "admin" });
-      console.log("res.status", res.status);
 
       if (res.status === "success") {
-        console.log("res.data.", res.data);
         refetchData();
         dispatch(updateItems({ ...res.data, validEntries: res.data.inserted }));
+        clearFile();
         showNotification({
           message: res.message,
           color: "green",
@@ -62,35 +62,36 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
     <Group position="center">
       <FileButton resetRef={resetRef} onChange={setFile} accept=".csv">
         {(props) => (
-          <Button {...props}>{file ? file.name : "Upload Items"}</Button>
+          <OutlineButton
+            title={file ? file.name : "Upload Items"}
+            variant="outline"
+            {...props}
+          />
         )}
       </FileButton>
       {file && (
         <Fragment>
-          <Tooltip label="Remove">
-            <ActionIcon
-              color="red"
-              variant="filled"
-              disabled={!file || isLoading}
-              onClick={clearFile}
-            >
-              <IconTrash />
-            </ActionIcon>
-          </Tooltip>
-          <Tooltip label="Save Items">
-            <ActionIcon
-              disabled={isLoading}
-              onClick={handleUploadItems}
-              variant="filled"
-              color="blue"
-            >
-              <IconDeviceFloppy />
-            </ActionIcon>
-          </Tooltip>
+          <ActionIcon
+            color="red"
+            variant="filled"
+            disabled={!file || isLoading}
+            onClick={clearFile}
+          >
+            <IconTrash />
+          </ActionIcon>
+
+          <ActionIcon
+            disabled={isLoading}
+            onClick={handleUploadItems}
+            variant="filled"
+            color="blue"
+          >
+            <IconDeviceFloppy />
+          </ActionIcon>
         </Fragment>
       )}
     </Group>
   );
 };
 
-export default UploadItemsBtn;
+export default memo(UploadItemsBtn);

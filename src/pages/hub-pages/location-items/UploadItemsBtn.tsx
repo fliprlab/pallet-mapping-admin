@@ -1,11 +1,7 @@
-import React, { CSSProperties, Fragment, useState } from "react";
-
-import { useCSVReader } from "react-papaparse";
-import OutlineButton from "../../../components/button/OutlineButton";
-import { ActionIcon } from "@mantine/core";
-import { IconTrash, IconUpload } from "@tabler/icons";
-import { COLORS } from "../../../colors";
+import React, { Fragment, memo, useRef, useState } from "react";
+import { ActionIcon, FileButton, Group } from "@mantine/core";
 import { useCreateLocationItemMutation } from "../../../hooks/location-items/mutation/createLocationItem.mutation";
+import { IconDeviceFloppy, IconTrash } from "@tabler/icons";
 import { showNotification } from "@mantine/notifications";
 import { useAppDispatch } from "../../../app/hooks";
 import {
@@ -13,75 +9,38 @@ import {
   toggleDrawer,
   updateItems,
 } from "../../../app/reducers/upload-items/upload-items.reducer";
+import OutlineButton from "../../../components/button/OutlineButton";
 
 interface IUploadItemsBtn {
   refetchData: () => void;
 }
 
-const styles = {
-  csvReader: {
-    display: "flex",
-    flexDirection: "row",
-  } as CSSProperties,
-  browseFile: {
-    width: "20%",
-  } as CSSProperties,
-  acceptedFile: {
-    border: "1px solid #ccc",
-    height: 45,
-    lineHeight: 2.5,
-    paddingLeft: 10,
-    width: "80%",
-  } as CSSProperties,
-  remove: {
-    borderRadius: 0,
-    padding: "0 20px",
-  } as CSSProperties,
-  progressBarBackgroundColor: {
-    backgroundColor: "red",
-  } as CSSProperties,
-};
+const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
+  const [file, setFile] = useState<any>(undefined);
+  const resetRef = useRef<() => void>(null);
 
-const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
-  const { CSVReader } = useCSVReader();
-  const [items, setItems] = useState<TLocationItems[]>([]);
   const dispatch = useAppDispatch();
-  const { isLoading, mutateAsync } = useCreateLocationItemMutation("hub");
 
-  const onUploadAccept = (results: any) => {
-    const { data } = results as { data: any[] };
-    const csvArray: any[] = [];
-
-    data.forEach((item: any[], i) => {
-      if (i > 0) {
-        let object: any = {};
-
-        item.forEach((value, index) => {
-          object[data[0][index]] = value;
-        });
-
-        csvArray.push(object);
-      }
-    });
-    setItems(
-      csvArray.map((item: any) => ({
-        destination: item.shipment_destination_location_name,
-        itemId: item.primary_key,
-        zone: item.Zone,
-        lpst: item.LPST,
-      }))
-    );
+  const clearFile = () => {
+    setFile(null);
+    resetRef.current?.();
   };
+
+  const { isLoading, mutateAsync } = useCreateLocationItemMutation("hub");
 
   const handleUploadItems = async () => {
     dispatch(toggleDrawer());
     dispatch(setLoading(true));
+    const formData = new FormData();
+
+    formData.append("uploadFile", file);
     try {
-      const res = await mutateAsync({ items, prefix: "hub" });
+      const res = await mutateAsync({ formData: formData, prefix: "hub" });
 
       if (res.status === "success") {
+        refetchData();
         dispatch(updateItems({ ...res.data, validEntries: res.data.inserted }));
-        setItems([]);
+        clearFile();
         showNotification({
           message: res.message,
           color: "green",
@@ -100,47 +59,39 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = () => {
   };
 
   return (
-    <CSVReader onUploadAccepted={onUploadAccept}>
-      {({ getRootProps, acceptedFile, getRemoveFileProps }: any) => (
-        <>
-          <div style={styles.csvReader}>
-            <OutlineButton
-              {...getRootProps()}
-              title={
-                acceptedFile && items.length > 0
-                  ? acceptedFile.name
-                  : "Upload Items"
-              }
-            />
+    <Group position="center">
+      <FileButton resetRef={resetRef} onChange={setFile} accept=".csv">
+        {(props) => (
+          <OutlineButton
+            title={file ? file.name : "Upload Items"}
+            variant="outline"
+            {...props}
+          />
+        )}
+      </FileButton>
+      {file && (
+        <Fragment>
+          <ActionIcon
+            color="red"
+            variant="filled"
+            disabled={!file || isLoading}
+            onClick={clearFile}
+          >
+            <IconTrash />
+          </ActionIcon>
 
-            {acceptedFile && items.length > 0 && (
-              <Fragment>
-                <ActionIcon
-                  disabled={isLoading}
-                  loading={isLoading}
-                  mx={10}
-                  size={36}
-                  style={{ borderColor: COLORS.primary, color: COLORS.primary }}
-                  variant="outline"
-                  onClick={handleUploadItems}
-                >
-                  <IconUpload />
-                </ActionIcon>
-                <ActionIcon
-                  size={36}
-                  color="red"
-                  variant="outline"
-                  {...getRemoveFileProps()}
-                >
-                  <IconTrash />
-                </ActionIcon>
-              </Fragment>
-            )}
-          </div>
-        </>
+          <ActionIcon
+            disabled={isLoading}
+            onClick={handleUploadItems}
+            variant="filled"
+            color="blue"
+          >
+            <IconDeviceFloppy />
+          </ActionIcon>
+        </Fragment>
       )}
-    </CSVReader>
+    </Group>
   );
 };
 
-export default UploadItemsBtn;
+export default memo(UploadItemsBtn);
