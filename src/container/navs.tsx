@@ -26,12 +26,12 @@ export const navs: TSidebar[] = [
     label: "Grid List",
     to: "/admin/grid-list",
   },
-  {
-    icon: ICONS.listItems,
-    activeIcon: ICONS.listItems_active,
-    label: "Items",
-    to: "/admin/items",
-  },
+  // {
+  //   icon: ICONS.listItems,
+  //   activeIcon: ICONS.listItems_active,
+  //   label: "Items",
+  //   to: "/admin/items",
+  // },
   {
     icon: ICONS.pallet,
     activeIcon: ICONS.palletActive,
