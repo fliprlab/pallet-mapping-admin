@@ -6,6 +6,7 @@ import { locationsItemsColumns } from "./location-items/location-items.columns";
 import { locationsColumns } from "./locations/locationsColumns";
 import { palletsColumns } from "./pallets/palletsColumns";
 import { userColumns } from "./user/userColumns";
+import { zoneColums } from "./zone/zoneColums";
 
 export const COLUMNS = {
   userColumns,
@@ -16,4 +17,5 @@ export const COLUMNS = {
   itemColumns,
   locationsItemsColumns,
   palletsColumns,
+  zoneColums,
 };

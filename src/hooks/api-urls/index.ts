@@ -5,6 +5,7 @@ import { hubAdminApis } from "./hubAdmin.api";
 import { locationItemApis } from "./location-item.api";
 import { locationApis } from "./locations.api";
 import { palletsApi } from "./pallet.api";
+import { zoneApis } from "./zone.api";
 
 export const apiUrls = {
   ...authApis,
@@ -14,4 +15,5 @@ export const apiUrls = {
   ...hubAdminApis,
   ...locationItemApis,
   ...palletsApi,
+  ...zoneApis,
 };

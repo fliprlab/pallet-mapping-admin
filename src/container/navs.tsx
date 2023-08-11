@@ -13,12 +13,17 @@ export const navs: TSidebar[] = [
     label: "Hub Admin",
     to: "/admin/hub-admin",
   },
-
   {
     icon: ICONS.location,
     activeIcon: ICONS.location_active,
     label: "Locations",
     to: "/admin/locations",
+  },
+  {
+    icon: ICONS.listItems,
+    activeIcon: ICONS.listItems_active,
+    label: "Zones",
+    to: "/admin/zones",
   },
   {
     icon: ICONS.grid,
