@@ -12,6 +12,7 @@ import HubDashboard from "../pages/hub-pages/dashboard/HubDashboard";
 import HubUsers from "../pages/hub-pages/users/HubUsers";
 import LocationItems from "../pages/hub-pages/location-items/LocationItems";
 import Pallets from "../pages/pallets/Pallets";
+import Zone from "../pages/zone/Zone";
 
 export const appRouter = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "locations",
         element: <Locations />,
+      },
+      {
+        path: "zones",
+        element: <Zone />,
       },
       {
         path: "grid-list",
