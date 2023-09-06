@@ -3,8 +3,10 @@ import moment from "moment";
 const status = (item: TLocationItems & { pallet: Object; status: string }) => {
   if (item.status === "created" && item.pallet) {
     return "sort";
-  } else if (item.status === "picked up") {
+  } else if (item.status === "put away") {
     return "bagged";
+  } else if (item.status === "picked up") {
+    return "picked up";
   } else {
     return item.status;
   }

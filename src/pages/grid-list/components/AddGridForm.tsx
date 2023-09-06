@@ -58,6 +58,7 @@ const AddGridForm: React.FC<IProps> = ({ toggle }) => {
       <Box my={15}>
         <Select
           placeholder="Enter Location"
+          searchable
           data={locations}
           {...getInputProps("location")}
         />
