@@ -33,10 +33,10 @@ export const locationsItemsColumns: TTableColumns[] = [
     label: "LPST",
   },
   {
-    label: "Created At",
-    key: "createdAt",
+    label: "Updated At",
+    key: "updatedAt",
     renderCell: (e) => (
-      <p>{moment(e.createdAt).format("DD MMM YYYY, hh:mm a")}</p>
+      <p>{moment(e.updatedAt).format("DD MMM YYYY, hh:mm A")}</p>
     ),
   },
   {
