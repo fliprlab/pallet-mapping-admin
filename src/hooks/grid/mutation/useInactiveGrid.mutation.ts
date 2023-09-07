@@ -16,19 +16,11 @@ const update = async (data: IData) => {
   return response;
 };
 
-export const useInactiveGridMutation = (
-  params: TPaging & { inactive: string }
-) => {
+export const useInactiveGridMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(update, {
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        "admin",
-        "get-grids",
-        params.itemPerPage,
-        params.page,
-        params.inactive,
-      ]);
+      queryClient.invalidateQueries(["admin", "get-grids"]);
     },
   });
 };
