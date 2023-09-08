@@ -39,6 +39,7 @@ const DynamicSelect: React.FC<IDynamicSelect> = ({
 
   return (
     <Select
+      searchable
       disabled={disabled}
       placeholder={label}
       data={selectData}
