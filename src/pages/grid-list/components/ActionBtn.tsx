@@ -6,14 +6,11 @@ import { showNotification } from "@mantine/notifications";
 
 interface IActionBtn {
   data: { _id: string; active: boolean };
+  refetch: () => void;
 }
 
 const ActionBtn: React.FC<IActionBtn> = ({ data: { active = true, _id } }) => {
-  const { mutateAsync, isLoading } = useInactiveGridMutation({
-    itemPerPage: 50,
-    page: 1,
-    inactive: active ? "active" : "in-active",
-  });
+  const { mutateAsync, isLoading } = useInactiveGridMutation();
 
   const handleInactive = async () => {
     const res = await mutateAsync({ _id, active });

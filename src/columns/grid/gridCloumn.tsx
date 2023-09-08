@@ -1,5 +1,4 @@
 import moment from "moment";
-import ActionBtn from "../../pages/grid-list/components/ActionBtn";
 
 export const gridColumns: TTableColumns[] = [
   {
@@ -32,10 +31,5 @@ export const gridColumns: TTableColumns[] = [
   {
     label: "Status",
     key: "status",
-  },
-  {
-    label: "Action",
-    key: "action",
-    renderCell: (row) => <ActionBtn data={row} />,
   },
 ];

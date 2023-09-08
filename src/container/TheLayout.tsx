@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import TheHeader from "./TheHeader";
 import TheSidebar from "./TheSidebar";
 import InvalidItemDrawer from "../components/invalid-items-drawer/InvalidItemDrawer";
+import UploadGridDrawer from "../components/upload-grids-drawer/UploadGridDrawer";
 
 interface IProps {
   navs: TSidebar[];
@@ -26,6 +27,7 @@ const TheLayout = ({ navs }: IProps) => {
         <Outlet />
       </Box>
       <InvalidItemDrawer />
+      <UploadGridDrawer />
     </AppShell>
   );
 };
