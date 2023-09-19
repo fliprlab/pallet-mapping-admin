@@ -34,18 +34,15 @@ const itemSlice = createSlice({
     },
     toggleDrawer: (state) => {
       state.drawerOpened = !state.drawerOpened;
-
-      console.log("state.drawerOpened", state.drawerOpened);
-
-      if (!state.drawerOpened) {
-        // reset all
-        state.items.duplicateEntries = [];
-        state.items.invalidEntries = [];
-        state.items.invalidLocation = [];
-        state.items.inserted = [];
-        state.drawerLoading = false;
-        state.progress = 0;
-      }
+      // if (!state.drawerOpened) {
+      //   // reset all
+      //   state.items.duplicateEntries = [];
+      //   state.items.invalidEntries = [];
+      //   state.items.invalidLocation = [];
+      //   state.items.inserted = [];
+      //   state.drawerLoading = false;
+      //   state.progress = 0;
+      // }
     },
     updateItems: (state, action: PayloadAction<IUploadItems["items"]>) => {
       state.items = action.payload;

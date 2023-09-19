@@ -8,6 +8,7 @@ import {
 import { memo, useEffect } from "react";
 import ItemsList from "./components/ItemsList";
 import { useWebsocket } from "../../services/socket.service";
+import { userToken } from "../../services/authenticate.service";
 
 const InvalidItemDrawer = () => {
   const { socket } = useWebsocket();
@@ -20,14 +21,14 @@ const InvalidItemDrawer = () => {
     console.log("socket", socket);
 
     socket &&
-      socket.on("progress", (uploadStatus: any) => {
+      socket.on(`progress-${userToken}`, (uploadStatus: any) => {
         console.log("Secket ON");
         const { percentage, uploadItems: itm } = uploadStatus;
         dispatch(setProgress(percentage));
         dispatch(updateItems(itm));
       });
     return () => {
-      socket && socket.off("progress");
+      socket && socket.off(`progress-${userToken}`);
     };
   }, [dispatch, socket]);
 
