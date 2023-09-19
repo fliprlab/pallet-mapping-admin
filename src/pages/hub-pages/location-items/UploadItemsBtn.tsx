@@ -39,7 +39,6 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
 
       if (res.status === "success") {
         refetchData();
-        dispatch(updateItems({ ...res.data, validEntries: res.data.inserted }));
         clearFile();
         showNotification({
           message: res.message,

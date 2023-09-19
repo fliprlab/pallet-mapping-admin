@@ -3,11 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   setProgress,
   toggleDrawer,
+  updateItems,
 } from "../../app/reducers/upload-items/upload-items.reducer";
 import { memo, useEffect } from "react";
 import ItemsList from "./components/ItemsList";
-
 import { useWebsocket } from "../../services/socket.service";
+import { userToken } from "../../services/authenticate.service";
 
 const InvalidItemDrawer = () => {
   const { socket } = useWebsocket();
@@ -15,17 +16,19 @@ const InvalidItemDrawer = () => {
     (state) => state.uploadItems
   );
   const dispatch = useAppDispatch();
-  const { duplicateEntries, invalidEntries, invalidLocation, validEntries } =
-    items;
 
   useEffect(() => {
-    socket &&
-      socket.on("progress", (percentage: number) => {
-        dispatch(setProgress(percentage));
-      });
+    console.log("socket", socket);
 
+    socket &&
+      socket.on(`progress-${userToken}`, (uploadStatus: any) => {
+        console.log("Secket ON");
+        const { percentage, uploadItems: itm } = uploadStatus;
+        dispatch(setProgress(percentage));
+        dispatch(updateItems(itm));
+      });
     return () => {
-      socket && socket.off("progress");
+      socket && socket.off(`progress-${userToken}`);
     };
   }, [dispatch, socket]);
 
@@ -66,25 +69,25 @@ const InvalidItemDrawer = () => {
           <Box>
             <ItemsList
               key={"Invalid Location Items"}
-              items={invalidLocation}
+              items={items.invalidLocation}
               color="#ff9966"
               title="Invalid Location Items"
             />
             <ItemsList
               key={"Invalid Items"}
-              items={invalidEntries}
+              items={items.invalidEntries}
               color="#cc3300"
               title="Invalid Items"
             />
             <ItemsList
               key={"Duplicate Items"}
-              items={duplicateEntries}
+              items={items.duplicateEntries}
               color="#ffcc00"
               title="Duplicate Items"
             />
             <ItemsList
               key={"Inserted Items"}
-              items={validEntries}
+              items={items.inserted}
               color="#339900"
               title="Inserted Items"
             />

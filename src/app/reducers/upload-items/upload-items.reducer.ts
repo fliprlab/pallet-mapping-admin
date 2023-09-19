@@ -8,7 +8,7 @@ interface IUploadItems {
   items: {
     invalidLocation: TLocationItems[];
     duplicateEntries: TLocationItems[];
-    validEntries: TLocationItems[];
+    inserted: TLocationItems[];
     invalidEntries: TLocationItems[];
   };
 }
@@ -21,7 +21,7 @@ const initialState: IUploadItems = {
     duplicateEntries: [],
     invalidEntries: [],
     invalidLocation: [],
-    validEntries: [],
+    inserted: [],
   },
 };
 
@@ -34,6 +34,15 @@ const itemSlice = createSlice({
     },
     toggleDrawer: (state) => {
       state.drawerOpened = !state.drawerOpened;
+      // if (!state.drawerOpened) {
+      //   // reset all
+      //   state.items.duplicateEntries = [];
+      //   state.items.invalidEntries = [];
+      //   state.items.invalidLocation = [];
+      //   state.items.inserted = [];
+      //   state.drawerLoading = false;
+      //   state.progress = 0;
+      // }
     },
     updateItems: (state, action: PayloadAction<IUploadItems["items"]>) => {
       state.items = action.payload;

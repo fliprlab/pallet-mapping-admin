@@ -1,6 +1,10 @@
 import { showNotification } from "@mantine/notifications";
 import { NavigateFunction } from "react-router-dom";
 
+export const userToken = sessionStorage.getItem(
+  `${process.env.REACT_APP_SECRET_KEY}`
+);
+
 export const checkUserAuthenticate = (
   data: any,
   navigation: NavigateFunction
