@@ -75,8 +75,10 @@ const LocationItems = () => {
               status={status}
               options={[
                 { label: "Created", value: "created" },
-                { label: "Bagged", value: "bagged" },
                 { label: "Sort", value: "sort" },
+                { label: "Bagged", value: "bagged" },
+                { label: "Picked up", value: "picked up" },
+                { label: "Dispatched", value: "dispatched" },
               ]}
               setStatus={setStatus}
             />
