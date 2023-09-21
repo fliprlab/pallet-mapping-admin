@@ -3,11 +3,10 @@ import { ActionIcon, FileButton, Group } from "@mantine/core";
 import { useCreateLocationItemMutation } from "../../../hooks/location-items/mutation/createLocationItem.mutation";
 import { IconDeviceFloppy, IconTrash } from "@tabler/icons";
 import { showNotification } from "@mantine/notifications";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   setLoading,
   toggleDrawer,
-  updateItems,
 } from "../../../app/reducers/upload-items/upload-items.reducer";
 import OutlineButton from "../../../components/button/OutlineButton";
 
@@ -18,7 +17,7 @@ interface IUploadItemsBtn {
 const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
   const [file, setFile] = useState<any>(undefined);
   const resetRef = useRef<() => void>(null);
-
+  const { progress } = useAppSelector((state) => state.uploadItems);
   const dispatch = useAppDispatch();
 
   const clearFile = () => {
@@ -59,15 +58,24 @@ const UploadItemsBtn: React.FC<IUploadItemsBtn> = ({ refetchData }) => {
 
   return (
     <Group position="center">
-      <FileButton resetRef={resetRef} onChange={setFile} accept=".csv">
-        {(props) => (
-          <OutlineButton
-            title={file ? file.name : "Upload Items"}
-            variant="outline"
-            {...props}
-          />
-        )}
-      </FileButton>
+      {progress > 0 && progress < 100 ? (
+        <OutlineButton
+          title={file ? file.name : "Uploading items"}
+          onClick={() => dispatch(toggleDrawer())}
+          variant="outline"
+        />
+      ) : (
+        <FileButton resetRef={resetRef} onChange={setFile} accept=".csv">
+          {(props) => (
+            <OutlineButton
+              title={file ? file.name : "Upload Items"}
+              variant="outline"
+              {...props}
+            />
+          )}
+        </FileButton>
+      )}
+
       {file && (
         <Fragment>
           <ActionIcon
