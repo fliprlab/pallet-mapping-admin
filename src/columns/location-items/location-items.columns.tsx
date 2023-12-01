@@ -22,6 +22,10 @@ export const locationsItemsColumns: TTableColumns[] = [
     label: "Destination",
   },
   {
+    key: "virtualId",
+    label: "Virtual Id",
+  },
+  {
     key: "pallet",
     label: "Pallet Id",
     renderCell: (e) => <p>{e?.pallet?.name}</p>,
