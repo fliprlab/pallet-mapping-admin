@@ -13,8 +13,7 @@ const status = (item: TLocationItems & { pallet: Object; status: string }) => {
 };
 
 const redBackground = (item: any) => {
-  console.log("item.status", item.status);
-  if (item.status === "cancelled") {
+  if (item.cancelled) {
     return {
       background: "#FF6B6B",
     };
