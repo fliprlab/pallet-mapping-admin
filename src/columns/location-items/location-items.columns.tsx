@@ -12,27 +12,46 @@ const status = (item: TLocationItems & { pallet: Object; status: string }) => {
   }
 };
 
+const redBackground = (item: any) => {
+  if (item.cancelled) {
+    return {
+      background: "#FF6B6B",
+    };
+  }
+  return {};
+};
+
 export const locationsItemsColumns: TTableColumns[] = [
   {
     key: "itemId",
     label: "Item Id",
+    columnStyle: redBackground,
   },
   {
     key: "destination",
     label: "Destination",
+    columnStyle: redBackground,
+  },
+  {
+    key: "virtualId",
+    label: "Virtual Id",
+    columnStyle: redBackground,
   },
   {
     key: "pallet",
     label: "Pallet Id",
     renderCell: (e) => <p>{e?.pallet?.name}</p>,
+    columnStyle: redBackground,
   },
   {
     key: "zone",
     label: "Zone",
+    columnStyle: redBackground,
   },
   {
     key: "lpst",
     label: "LPST",
+    columnStyle: redBackground,
   },
   {
     label: "Updated At",
@@ -40,10 +59,12 @@ export const locationsItemsColumns: TTableColumns[] = [
     renderCell: (e) => (
       <p>{moment(e.updatedAt).format("DD MMM YYYY, hh:mm A")}</p>
     ),
+    columnStyle: redBackground,
   },
   {
     key: "status",
     label: "Status",
     renderCell: (e) => <p>{status(e)}</p>,
+    columnStyle: redBackground,
   },
 ];
