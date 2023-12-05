@@ -1,6 +1,6 @@
 # Node Block
 
-FROM node:16-alpine as nodework
+FROM node:20-alpine as nodework
 
 RUN mkdir -p /usr/app/
 WORKDIR /usr/app
