@@ -72,11 +72,17 @@ const CustomTable: React.FC<IProps> = ({
                       }}
                     >
                       {columns.map((column, i) => {
+                        const style =
+                          column.columnStyle && column.columnStyle(item);
+
                         return (
                           <td
                             key={`${"_" + i}`}
                             className={classes.tBody}
-                            style={{ fontSize: fontSize }}
+                            style={{
+                              fontSize: fontSize,
+                              ...style,
+                            }}
                           >
                             {column.renderCell ? (
                               <Flex justify={"center"}>
