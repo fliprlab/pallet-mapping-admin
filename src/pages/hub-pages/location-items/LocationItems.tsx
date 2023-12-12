@@ -15,7 +15,6 @@ import DownloadItemsBtn from "./DownloadItemsBtn";
 const LocationItems = () => {
   const [activePage, setActivePage] = useState(1);
   const [pagedData, setPagedData] = useState({ total: 0 });
-
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [date, setDate] = useState<DateRangePickerValue>([null, null]);

@@ -44,6 +44,12 @@ export const locationsItemsColumns: TTableColumns[] = [
     columnStyle: redBackground,
   },
   {
+    key: "gridId",
+    label: "Grid Id",
+    renderCell: (e) => <p>{e?.gridId}</p>,
+    columnStyle: redBackground,
+  },
+  {
     key: "zone",
     label: "Zone",
     columnStyle: redBackground,
