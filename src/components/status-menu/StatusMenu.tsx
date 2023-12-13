@@ -20,12 +20,12 @@ const StatusMenu: React.FC<IStatusMenu> = ({
     <Menu shadow="md" width={200}>
       <Menu.Target>
         <Button size="xs" className={classes.menuBtn}>
-          {status === "" ? "Status" : status}
+          {status === "" ? "All Status" : status}
         </Button>
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item onClick={() => setStatus("")}>Status</Menu.Item>
+        <Menu.Item onClick={() => setStatus("")}>All Status</Menu.Item>
         {options.map((option) => (
           <Menu.Item key={option.value} onClick={() => setStatus(option.value)}>
             {option.label}

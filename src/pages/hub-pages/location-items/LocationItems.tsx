@@ -74,7 +74,9 @@ const LocationItems = () => {
               status={status}
               options={[
                 { label: "Created", value: "created" },
-                { label: "Sort", value: "sort" },
+                // { label: "Sort", value: "sort" },
+                { label: "Primary Sort", value: "primary sort" },
+                { label: "Secondary Sort", value: "secondary sort" },
                 { label: "Bagged", value: "bagged" },
                 { label: "Picked up", value: "picked up" },
                 { label: "Dispatched", value: "dispatched" },
