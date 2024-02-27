@@ -6,9 +6,10 @@ RUN mkdir -p /usr/app/
 WORKDIR /usr/app
 
 COPY package.json .
-RUN npm i --force
+COPY yarn.lock .
+RUN yarn install
 COPY . .
-RUN npm run build-dev
+RUN yarn build-dev
 
 # Nginx Block
 FROM nginx:1.23-alpine
